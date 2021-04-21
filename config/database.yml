@@ -16,10 +16,6 @@ test:
   <<: *default
   database: airplanner_test
 
-dev:
-  <<: *default
-  database: <%= ENV['DB_NAME'] || 'airplanner_dev' %>
-
 staging:
   <<: *default
   database: <%= ENV['DB_NAME'] || 'airplanner_staging' %>

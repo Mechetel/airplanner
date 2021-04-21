@@ -7,19 +7,19 @@ services:
   web_server:
     image: 840573575565.dkr.ecr.us-east-1.amazonaws.com/airplanner/web_server:staging
     volumes:
-      - assets:/home/www/airplanner/public/assets
+      - assets:/home/www/airplanner/app/assets
     environment:
       STATIC_PATH: /home/www/airplanner/public
     ports:
       - '80:8080'
     links:
       - server_app
-    # logging:
-    #   driver: awslogs
-    #   options:
-    #     awslogs-group: airplanner-staging
-    #     awslogs-region: us-east-1
-    #     awslogs-stream-prefix: web_server
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: airplanner-staging
+        awslogs-region: us-east-1
+        awslogs-stream-prefix: web_server
 
   server_app: &server_app
     image: 840573575565.dkr.ecr.us-east-1.amazonaws.com/airplanner/server_app:staging
@@ -37,27 +37,27 @@ services:
       DB_PASSWORD: postgres
       REDIS_DB: "redis://in_memory_store:6379"
     volumes:
-      - assets:/home/www/airplanner/public/assets
+      - assets:/home/www/airplanner/app/assets
     links:
       - db
       - in_memory_store
-    # logging:
-    #   driver: awslogs
-    #   options:
-    #     awslogs-group: airplanner-staging
-    #     awslogs-region: us-east-1
-    #     awslogs-stream-prefix: server_app
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: airplanner-staging
+        awslogs-region: us-east-1
+        awslogs-stream-prefix: server_app
 
   worker_app:
     <<: *server_app
     command: bundle exec sidekiq -C config/sidekiq.yml
     entrypoint: ''
-    # logging:
-    #   driver: awslogs
-    #   options:
-    #     awslogs-group: airplanner-staging
-    #     awslogs-region: us-east-1
-    #     awslogs-stream-prefix: worker_app
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: airplanner-staging
+        awslogs-region: us-east-1
+        awslogs-stream-prefix: worker_app
 
   db:
     image: postgres:9.6
@@ -69,12 +69,12 @@ services:
       - '5432'
     volumes:
       - /postgres:/var/lib/postgresql/data
-    # logging:
-    #   driver: awslogs
-    #   options:
-    #     awslogs-group: airplanner-staging
-    #     awslogs-region: us-east-1
-    #     awslogs-stream-prefix: db
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: airplanner-staging
+        awslogs-region: us-east-1
+        awslogs-stream-prefix: db
 
   in_memory_store:
     image: redis:3.2-alpine
@@ -82,9 +82,9 @@ services:
       - '6379'
     volumes:
       - /redis:/var/lib/redis/data
-    # logging:
-    #   driver: awslogs
-    #   options:
-    #     awslogs-group: airplanner-staging
-    #     awslogs-region: us-east-1
-    #     awslogs-stream-prefix: in_memory_store
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: airplanner-staging
+        awslogs-region: us-east-1
+        awslogs-stream-prefix: in_memory_store
