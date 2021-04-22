@@ -7,8 +7,8 @@ RUN apt-get update -qq && apt-get install -y $BUILD_PACKAGES
 
 RUN rm /usr/share/nginx/html/*
 
-COPY configs/nginx.conf /etc/nginx/nginx.conf
-COPY configs/default.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY default.conf /etc/nginx/conf.d/default.conf
 
 RUN touch /var/run/nginx.pid && \
     chown -R www-data:www-data /var/run/nginx.pid && \
@@ -18,7 +18,4 @@ RUN touch /var/run/nginx.pid && \
 
 USER www-data
 
-COPY ./docker-entrypoint.sh /
-ENTRYPOINT ["./docker-entrypoint.sh"]
-
-CMD ["nginx", "-g", "daemon off;"]
+COPY prepare-config /usr/bin/prepare-config

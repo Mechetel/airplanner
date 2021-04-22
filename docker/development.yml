@@ -1,64 +1,54 @@
 version: '3.1'
 
 volumes:
-  redis:
-  postgres:
   bundle_path:
 
 services:
   db:
     image: postgres:9.6
     ports:
-      - 5428:5432
+      - 5432:5432
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: airplanner_development
     volumes:
-      - postgres:/var/lib/postgresql/data
+      - /postgres:/var/lib/postgresql/data
 
   in_memory_store:
     image: redis:3.2-alpine
     ports:
-      - 6378:6379
+      - 6379:6379
     volumes:
-      - redis:/var/lib/redis/data
+      - /redis:/var/lib/redis/data
 
-  server_app: &server_app
-    build: .
+  server_app:
+    build: dockerfiles/be.Dockerfile
     command: >
       /bin/bash -c "
-      rm -f $APP_HOME/tmp/pids/server.pid &&
-      rm -f $APP_HOME/tmp/pids/sidekiq.pid &&
       bundle exec rake db:create &&
       bundle exec rake db:migrate &&
-      exec bundle exec rails server --binding 0.0.0.0"
-    volumes:
-      - .:/home/www/airplanner
-      - bundle_path:/bundle
-    restart: on-failure
-    environment:
-      RAILS_ENV: development
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_NAME: airplanner_development
-      DB_USERNAME: postgres
-      DB_PASSWORD: postgres
-      REDIS_DB: "redis://in_memory_store:6379"
-      SECRET_KEY_BASE: STUB
-      DEVISE_SECRET_KEY: STUB
-    depends_on:
-      - db
-      - in_memory_store
+      exec bundle exec rails server"
     ports:
       - 3000:3000
-
-  server_worker_app:
-    <<: *server_app
-    command: bundle exec sidekiq -C config/sidekiq.yml
+    env_files:
+      - secret-envs-production/server.env
+    volumes:
+      - .:/home/www/airplanner
+      - gems:/bundler
     depends_on:
       - db
-      - server_app
       - in_memory_store
+    restart: on-failure
+
+  server_worker_app:
+    build: dockerfiles/be.Dockerfile
+    command: bundle exec sidekiq -C config/sidekiq.yml
     ports:
       - 3001:3001
+    env_files:
+      - secret-envs-production/server.env
+    depends_on:
+      - db
+      - in_memory_store
+    restart: on-failure

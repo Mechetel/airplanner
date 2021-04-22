@@ -1,4 +1,4 @@
-FROM ruby:2.7.2
+FROM ruby:3.0
 
 USER root
 
@@ -30,7 +30,9 @@ USER $APP_USER
 
 ADD Gemfile Gemfile.lock $APP_HOME/
 
-RUN bundle check || bundle install
+RUN bundle install
+
+######################################################
 
 ADD . $APP_HOME/
 
@@ -41,5 +43,3 @@ RUN chown -R $APP_USER:$APP_USER "$APP_HOME/."
 USER $APP_USER
 
 RUN bin/rails assets:precompile
-
-CMD [ "bundle", "exec", "puma", "-C", "config/puma.rb" ]
