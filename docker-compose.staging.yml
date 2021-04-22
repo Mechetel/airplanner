@@ -27,8 +27,13 @@ services:
 
   server_app: &server_app
     build: .
-    command: bundle exec rails server --binding 0.0.0.0
-    entrypoint: "./docker-entrypoint.sh"
+    command: >
+      /bin/bash -c "
+      rm -f $APP_HOME/tmp/pids/server.pid &&
+      rm -f $APP_HOME/tmp/pids/sidekiq.pid &&
+      bundle exec rake db:create &&
+      bundle exec rake db:migrate &&
+      exec bundle exec rails server --binding 0.0.0.0"
     volumes:
       - assets:/home/www/airplanner/public/assets
       - ./config/master.key:/home/www/airplanner/config/master.key
@@ -54,9 +59,8 @@ services:
   server_worker_app:
     <<: *server_app
     command: bundle exec sidekiq -C config/sidekiq.yml
-    entrypoint: ''
     ports:
-      - '3001:3001'
+      - 3001:3001
     depends_on:
       - db
       - server_app
