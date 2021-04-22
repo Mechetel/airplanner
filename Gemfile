@@ -1,7 +1,9 @@
 source 'https://rubygems.org'
-git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.2'
+git_source(:github) do |repo_name|
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
+  "https://github.com/#{repo_name}.git"
+end
 
 gem 'rails', '~> 6.1.3', '>= 6.1.3.1'
 gem 'pg', '~> 1.1'
@@ -20,7 +22,6 @@ gem 'devise'
 # Backgroud worker
 gem 'hiredis', '~> 0.6.1'
 gem 'sidekiq', '~> 5.2'
-
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
