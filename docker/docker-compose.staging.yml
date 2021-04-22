@@ -10,7 +10,7 @@ services:
   db:
     image: postgres:9.6
     ports:
-      - '5428:5432'
+      - 5428:5432
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -66,12 +66,14 @@ services:
       - server_app
       - in_memory_store
 
-  web_server:
+  nginx:
     build: ./deploy/configs/nginx
     volumes:
       - assets:/home/www/airplanner/public/assets
     environment:
-      CUSTOM_APP_VHOST: server_app
+      APP_NAME: server_app
+      APP_PORT: 3000
+      APP_VHOST: TODO # curl http://169.254.169.254/latest/meta-data/public-hostname
       STATIC_PATH: /home/www/airplanner/public
     ports:
       - '80:8080'

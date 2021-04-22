@@ -4,8 +4,8 @@ volumes:
   assets:
 
 services:
-  web_server:
-    image: 840573575565.dkr.ecr.us-east-1.amazonaws.com/airplanner/web_server:staging
+  nginx:
+    image: 840573575565.dkr.ecr.us-east-1.amazonaws.com/airplanner/nginx:staging
     volumes:
       - assets:/home/www/airplanner/app/assets
     environment:
@@ -19,7 +19,7 @@ services:
     #   options:
     #     awslogs-group: airplanner-staging
     #     awslogs-region: us-east-1
-    #     awslogs-stream-prefix: web_server
+    #     awslogs-stream-prefix: nginx
 
   server_app: &server_app
     image: 840573575565.dkr.ecr.us-east-1.amazonaws.com/airplanner/server_app:staging

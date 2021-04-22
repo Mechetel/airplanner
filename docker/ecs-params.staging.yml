@@ -7,7 +7,7 @@ task_definition:
     mem_limit: 0.5GB # 900
 
   services:
-    web_server:
+    nginx:
       essential: true
     server_app:
       essential: true
