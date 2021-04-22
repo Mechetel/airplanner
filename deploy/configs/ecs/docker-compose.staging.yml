@@ -2,6 +2,14 @@ version: '3'
 
 volumes:
   assets:
+  postgres:
+    driver: "local"
+  redis:
+    driver: "local"
+
+networks:
+  default:
+    driver: bridge
 
 services:
   web_server:
@@ -68,7 +76,7 @@ services:
     ports:
       - '5432'
     volumes:
-      - /postgres:/var/lib/postgresql/data
+      - postgres:/var/lib/postgresql/data
     logging:
       driver: awslogs
       options:
@@ -81,7 +89,7 @@ services:
     ports:
       - '6379'
     volumes:
-      - /redis:/var/lib/redis/data
+      - redis:/var/lib/redis/data
     logging:
       driver: awslogs
       options:
