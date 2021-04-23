@@ -1,21 +1,16 @@
 version: '3.1'
 
-volumes:
-  bundle_path:
-
 services:
   db:
     image: postgres:9.6
     ports:
       - 5432:5432
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: airplanner_development
+    env_files:
+      - secret-envs/dev-db.env
     volumes:
       - /postgres:/var/lib/postgresql/data
 
-  in_memory_store:
+  redis:
     image: redis:3.2-alpine
     ports:
       - 6379:6379
@@ -32,23 +27,23 @@ services:
     ports:
       - 3000:3000
     env_files:
-      - secret-envs-production/server.env
+      - secret-envs/dev-server.env
     volumes:
       - .:/home/www/airplanner
       - gems:/bundler
     depends_on:
       - db
-      - in_memory_store
+      - redis
     restart: on-failure
 
-  server_worker_app:
+  sidekiq:
     build: dockerfiles/be.Dockerfile
     command: bundle exec sidekiq -C config/sidekiq.yml
     ports:
       - 3001:3001
     env_files:
-      - secret-envs-production/server.env
+      - secret-envs/dev-server.env
     depends_on:
       - db
-      - in_memory_store
+      - redis
     restart: on-failure

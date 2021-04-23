@@ -1,34 +1,24 @@
-version: '3'
+version: '3.1'
+
+volumes:
+  assets:
 
 services:
   db:
     image: postgres:9.6
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: airplanner_staging
+    env_files:
+      - secret-envs/staging-db.env
     volumes:
       - /postgres:/var/lib/postgresql/data
-    # logging:
-    #   driver: awslogs
-    #   options:
-    #     awslogs-group: airplanner-staging
-    #     awslogs-region: us-east-1
-    #     awslogs-stream-prefix: db
 
-  in_memory_store:
+  redis:
     image: redis:3.2-alpine
     volumes:
       - /redis:/var/lib/redis/data
-    # logging:
-    #   driver: awslogs
-    #   options:
-    #     awslogs-group: airplanner-staging
-    #     awslogs-region: us-east-1
-    #     awslogs-stream-prefix: in_memory_store
 
-  server_app: &server_app
+  server_app:
     image: 840573575565.dkr.ecr.us-east-1.amazonaws.com/airplanner/server_app:staging
+    build: dockerfiles/be.Dockerfile
     command: >
       /bin/bash -c "
       bundle exec rake db:create &&
@@ -37,54 +27,39 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - /assets:/home/www/airplanner/app/assets
-    environment:
-      RAILS_ENV: staging
-      RAILS_MASTER_KEY: 1ed9e34957f0ebeb5052ec486e66566c
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_NAME: airplanner_staging
-      DB_USERNAME: postgres
-      DB_PASSWORD: postgres
-      REDIS_DB: "redis://in_memory_store:6379"
-    links:
+      - assets:/home/www/airplanner/public/assets
+      - .:/home/www/airplanner
+      - gems:/bundler
+    restart: on-failure
+    env_files:
+      - secret-envs/staging-server.env
+    depends_on:
       - db
-      - in_memory_store
-    # logging:
-    #   driver: awslogs
-    #   options:
-    #     awslogs-group: airplanner-staging
-    #     awslogs-region: us-east-1
-    #     awslogs-stream-prefix: server_app
+      - redis
 
-  worker_app:
-    <<: *server_app
+  sidekiq:
+    build: dockerfiles/be.Dockerfile
     command: bundle exec sidekiq -C config/sidekiq.yml
-    entrypoint: ''
-    # logging:
-    #   driver: awslogs
-    #   options:
-    #     awslogs-group: airplanner-staging
-    #     awslogs-region: us-east-1
-    #     awslogs-stream-prefix: worker_app
+    env_files:
+      - secret-envs-production/staging-server.env
+    depends_on:
+      - db
+      - redis
+    restart: on-failure
 
   nginx:
     image: 840573575565.dkr.ecr.us-east-1.amazonaws.com/airplanner/nginx:staging
+    build: ./dockerfiles/nginx.Dockerfile
+    context: ./datum/nginx
     command: >
       /bin/bash -c "
       /usr/bin/prepare-config.sh &&
       exec nginx -g daemon off"
     volumes:
-      - assets:/home/www/airplanner/app/assets
-    environment:
-      STATIC_PATH: /home/www/airplanner/public
+      - assets:/home/www/airplanner/public/assets
+    env_files:
+      - secret-envs-production/staging-nginx.env
     ports:
       - 80:8080
-    links:
+    depends_on:
       - server_app
-    # logging:
-    #   driver: awslogs
-    #   options:
-    #     awslogs-group: airplanner-staging
-    #     awslogs-region: us-east-1
-    #     awslogs-stream-prefix: nginx
