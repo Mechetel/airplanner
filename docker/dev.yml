@@ -1,7 +1,9 @@
 version: '3.1'
 
 volumes:
-  gems:
+  be_gems:
+    external:
+      name: airplanner_be_gems
   postgres:
   redis:
 
@@ -38,8 +40,13 @@ services:
     environment:
       REDIS_URL: "redis://redis:6379"
     volumes:
-      - .:/app
-      - gems:/bundler
+      - be_gems:/usr/local/bundle
+
+      # sync to /app
+      - ..:/app
+
+      - /app/tmp/pids/
+      - /app/tmp/sockets/
     depends_on:
       - db
       - redis
@@ -59,8 +66,13 @@ services:
     environment:
       REDIS_URL: "redis://redis:6379"
     volumes:
-      - .:/app
-      - gems:/bundler
+      - be_gems:/usr/local/bundle
+
+      # sync to /app
+      - ..:/app
+
+      - /app/tmp/pids/
+      - /app/tmp/sockets/
     depends_on:
       - db
       - redis

@@ -26,11 +26,11 @@ WORKDIR /app
 
 USER $APP_USER
 
+######################################################
+
 ADD Gemfile Gemfile.lock /app/
 
 RUN bundle install
-
-######################################################
 
 ADD . $APP_HOME/
 
