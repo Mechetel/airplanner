@@ -1,16 +1,16 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  host: <%= ENV['DB_HOST'] %>
-  port: <%= ENV['DB_PORT'] %>
-  database: <%= ENV['DB_NAME'] %>
-  username: <%= ENV['DB_USERNAME'] %>
-  password: <%= ENV['DB_PASSWORD'] %>
+  host: <%= ENV['POSTGRES_HOST'] %>
+  port: <%= ENV['POSTGRES_PORT'] %>
+  database: <%= ENV['POSTGRES_DATABASE_NAME'] %>
+  username: <%= ENV['POSTGRES_USER'] %>
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
   <<: *default
-  database: <%= ENV['DB_NAME'] || 'airplanner_development' %>
+  database: <%= ENV['POSTGRES_DATABASE_NAME'] || 'airplanner_development' %>
 
 test:
   <<: *default
@@ -18,7 +18,7 @@ test:
 
 staging:
   <<: *default
-  database: <%= ENV['DB_NAME'] || 'airplanner_staging' %>
+  database: <%= ENV['POSTGRES_DATABASE_NAME'] || 'airplanner_staging' %>
 
 production:
   <<: *default

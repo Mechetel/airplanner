@@ -15,19 +15,17 @@ RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources
 RUN apt-get update && apt-get install -y yarn
 
 ENV APP_USER app
-ENV APP_USER_HOME /home/$APP_USER
-ENV APP_HOME /home/www/airplanner
 
-RUN useradd -m -d $APP_USER_HOME $APP_USER
+RUN useradd -m -d /home/$APP_USER $APP_USER
 
 RUN mkdir /var/www && \
    chown -R $APP_USER:$APP_USER /var/www && \
-   chown -R $APP_USER $APP_USER_HOME
+   chown -R $APP_USER /home/$APP_USER
 
-WORKDIR $APP_HOME
+WORKDIR /app
 
 USER $APP_USER
 
-ADD Gemfile Gemfile.lock $APP_HOME/
+ADD Gemfile Gemfile.lock /app/
 
 RUN bundle install

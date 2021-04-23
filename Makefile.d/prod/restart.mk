@@ -1,0 +1,1 @@
+prod_restart: build prod_install_deps prod_migrate_db prod_compile_assets prod_up_d

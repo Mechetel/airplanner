@@ -1,0 +1,388 @@
+deploy@ovh-us-01:/data/MYAPP$ cat /etc/nginx/sites-available/MYSITE.com
+map $sent_http_content_type $expires
+{
+    default                    off;
+    text/html                  epoch;
+    text/css                   max;
+    application/javascript     max;
+    application/font-woff      max;
+    application/font-woff2     max;
+    ~image/                    max;
+    ~audio/                    max;
+    ~video/                    max;
+}
+
+limit_req_zone $binary_remote_addr zone=backend_req_limit_per_ip:20m rate=5r/s;
+limit_req_zone $binary_remote_addr zone=api_req_limit_per_ip:20m rate=4r/m;
+limit_req_zone "$binary_remote_addr$request_uri" zone=api_req_limit_per_ip_and_url:20m rate=4r/m;
+limit_req_zone $binary_remote_addr zone=api_req_limit_per_ip_only_is_email_reg:20m rate=4r/m;
+limit_req_zone "$binary_remote_addr$request_uri" zone=api_req_limit_per_ip_and_url_only_is_email_reg:20m rate=4r/m;
+
+server
+{
+    listen 80;
+    server_name MYSITE.com www.MYSITE.com;
+
+    # Route .well-known to the verification directory we’ll tell Let’s Encrypt to use:
+    include /etc/nginx/snippets/acme.conf;
+
+    # Redirect all requests to the HTTPS version of the site:
+    location /
+    {return 301 https://MYSITE.com$request_uri;}
+
+    # ---------- BACKEND ----------
+    location @backend
+    {
+        limit_req zone=backend_req_limit_per_ip burst=20 nodelay;
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_redirect off;
+        proxy_buffering off;
+
+        # https://wiki.ssdt-ohio.org/display/rtd/Adjusting+nginx-proxy+Timeout+Configuration
+        proxy_connect_timeout 300;
+        proxy_send_timeout    300;
+        proxy_read_timeout    90m;
+        send_timeout          300;
+
+        proxy_set_header Host $http_host;
+        proxy_set_header Upgrade $http_upgrade;
+
+        proxy_set_header X-Real-IP  $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        #proxy_set_header X-Forwarded-Ssl on; # Optional
+        proxy_set_header X-Forwarded-Port $server_port;
+        proxy_set_header X-Forwarded-Host $host;
+    }
+}
+
+server
+{
+    listen 443 ssl http2;
+    server_name    www.MYSITE.com;
+
+    ssl_trusted_certificate /etc/letsencrypt/live/www.MYSITE.com/chain.pem;
+    ssl_certificate         /etc/letsencrypt/live/www.MYSITE.com/fullchain.pem;
+    ssl_certificate_key     /etc/letsencrypt/live/www.MYSITE.com/privkey.pem;
+
+    location = /generalfeed { try_files $uri @backend; }
+
+    # Redirect all requests to the non-www version of the site:
+    location /
+    {return 301 https://MYSITE.com$request_uri;}
+
+    # ---------- BACKEND ----------
+    location @backend
+    {
+        limit_req zone=backend_req_limit_per_ip burst=20 nodelay;
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_redirect off;
+        proxy_buffering off;
+
+        # https://wiki.ssdt-ohio.org/display/rtd/Adjusting+nginx-proxy+Timeout+Configuration
+        proxy_connect_timeout 300;
+        proxy_send_timeout    300;
+        proxy_read_timeout    90m;
+        send_timeout          300;
+
+        proxy_set_header Host $http_host;
+        proxy_set_header Upgrade $http_upgrade;
+
+        proxy_set_header X-Real-IP  $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        #proxy_set_header X-Forwarded-Ssl on; # Optional
+        proxy_set_header X-Forwarded-Port $server_port;
+        proxy_set_header X-Forwarded-Host $host;
+    }
+}
+
+server
+{
+    listen 443 ssl;
+    server_name MYSITE.com;
+
+    ssl_trusted_certificate /etc/letsencrypt/live/MYSITE.com/chain.pem;
+    ssl_certificate         /etc/letsencrypt/live/MYSITE.com/fullchain.pem;
+    ssl_certificate_key     /etc/letsencrypt/live/MYSITE.com/privkey.pem;
+
+    access_log /var/log/nginx/access_MYSITE.com.log;
+    error_log  /var/log/nginx/error_MYSITE.com.log;
+
+    client_max_body_size 550M;
+
+    expires $expires;
+
+    location /amchart_images/images
+    {alias /data/my-site-data/amchart_images;}
+
+    location /robots.txt
+    {alias /data/my-site-data/public/robots-allow-all.txt;}
+
+    location /sitemap.xml.gz
+    {alias /data/my-site-data/sitemap_output_dir/sitemap.xml.gz;}
+
+    location /public_upload
+    {alias /data/my-site-data/public_upload;}
+
+    location /carrierwave_cache
+    {alias /data/my-site-data/carrierwave_cache;}
+
+    location /filemanager_source
+    {alias /data/my-site-data/filemanager_upload_dir;}
+
+    # ---------- FILEMANAGER ----------
+    # redirect to filemanager and prevent cors issue
+    location /responsive_filemanager/
+    {
+        proxy_pass         http://localhost:8000/responsive_filemanager/;
+        proxy_http_version 1.1;
+
+        proxy_set_header Host      $host;
+        proxy_set_header X-Real-IP $remote_addr;
+
+        proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Ssl   on; # Optional
+        proxy_set_header X-Forwarded-Port  $server_port;
+        proxy_set_header X-Forwarded-Host  $host;
+    }
+
+    # deny access to .htaccess files, for filemanager
+    location ~ /\.ht { deny  all; }
+
+    location = /auth/sign_in        { return 301 /auth/sign-in; }
+    location = /auth/sign_up        { return 301 /auth/sign-up; }
+
+    location = /static_pages/about   { return 301 /about; }
+    location = /static_pages/faq     { return 301 /faq; }
+    location = /static_pages/contact { return 301 /contact; }
+    location = /static_pages/links   { return 301 /links; }
+
+    location = /static-pages/about   { return 301 /about; }
+    location = /static-pages/faq     { return 301 /faq; }
+    location = /static-pages/contact { return 301 /contact; }
+    location = /static-pages/links   { return 301 /links; }
+
+    # ---------- Amazon elasticsearch ----------
+    # we are using proxy because it's not possible to setup cors for amazon elasticsearch (that is living under vpc)
+    # also, this allows us to rescrict requests from user browser only to /_search
+
+
+    location /elasticsearch/publications/_search
+    {
+        proxy_pass http://127.0.0.1:9200/publications/_search;
+        proxy_redirect off;
+        proxy_buffering                         off;
+        proxy_pass_request_headers              on;
+        proxy_set_header Authorization          "";
+
+        access_log  off;
+        error_log off;
+    }
+
+    location /elasticsearch/donors/_search
+    {
+        auth_basic "Admins area";
+        auth_basic_user_file /etc/nginx/elasticsearch_donors_users;
+
+        proxy_pass http://127.0.0.1:9200/donors/_search;
+        proxy_redirect off;
+        proxy_buffering                         off;
+        proxy_pass_request_headers              on;
+
+        access_log  off;
+        error_log off;
+    }
+
+    location = / {
+        root /data/my-site-data/public;
+
+        # try files in root, if not - @backend
+        try_files $uri @backend;
+    }
+
+    location ~ ^/api/is-email-registered(.*)$
+    {
+        if ($http_user_agent = "") { return 403; }
+        limit_req zone=api_req_limit_per_ip_only_is_email_reg burst=20 nodelay;
+        limit_req zone=api_req_limit_per_ip_and_url_only_is_email_reg burst=20 nodelay;
+
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_redirect off;
+        proxy_buffering off;
+
+        # https://wiki.ssdt-ohio.org/display/rtd/Adjusting+nginx-proxy+Timeout+Configuration
+        proxy_connect_timeout 300;
+        proxy_send_timeout    300;
+        proxy_read_timeout    90m;
+        send_timeout          300;
+
+        proxy_set_header Host $http_host;
+        proxy_set_header Upgrade $http_upgrade;
+
+        proxy_set_header X-Real-IP  $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        #proxy_set_header X-Forwarded-Ssl on; # Optional
+        proxy_set_header X-Forwarded-Port $server_port;
+        proxy_set_header X-Forwarded-Host $host;
+    }
+
+    location ~ ^/api/(.*)$
+    {
+        if ($http_user_agent = "") { return 403; }
+        limit_req zone=api_req_limit_per_ip nodelay;
+        limit_req zone=api_req_limit_per_ip_and_url nodelay;
+
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_redirect off;
+        proxy_buffering off;
+
+        # https://wiki.ssdt-ohio.org/display/rtd/Adjusting+nginx-proxy+Timeout+Configuration
+        proxy_connect_timeout 300;
+        proxy_send_timeout    300;
+        proxy_read_timeout    90m;
+        send_timeout          300;
+
+        proxy_set_header Host $http_host;
+        proxy_set_header Upgrade $http_upgrade;
+
+        proxy_set_header X-Real-IP  $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        #proxy_set_header X-Forwarded-Ssl on; # Optional
+        proxy_set_header X-Forwarded-Port $server_port;
+        proxy_set_header X-Forwarded-Host $host;
+    }
+
+
+    location /
+    {
+        # auth_basic "Unauthorized";
+        # auth_basic_user_file /etc/nginx/users;
+
+        root /data/my-site-data/public;
+
+        # try files in root, if not - @backend
+        try_files $uri @backend;
+    }
+
+    # ---------- BACKEND ----------
+    location @backend
+    {
+        limit_req zone=backend_req_limit_per_ip burst=20 nodelay;
+        proxy_pass http://localhost:3000;
+#       rewrite "^/$" /latest-posts/ permanent;
+        proxy_http_version 1.1;
+        proxy_redirect off;
+        proxy_buffering off;
+
+        # https://wiki.ssdt-ohio.org/display/rtd/Adjusting+nginx-proxy+Timeout+Configuration
+        proxy_connect_timeout 300;
+        proxy_send_timeout    300;
+        proxy_read_timeout    90m;
+        send_timeout          300;
+
+        proxy_set_header Host $http_host;
+        proxy_set_header Upgrade $http_upgrade;
+
+        proxy_set_header X-Real-IP  $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        #proxy_set_header X-Forwarded-Ssl on; # Optional
+        proxy_set_header X-Forwarded-Port $server_port;
+        proxy_set_header X-Forwarded-Host $host;
+    }
+}
+
+deploy@ovh-us-01:/data/MYAPP$ cat /etc/nginx/sites-available/default.conf
+# Drop requests for unknown hosts
+#
+# If no default server is defined, nginx will use the first found server.
+# To prevent host header attacks, or other potential problems when an unknown
+# servername is used in a request, it's recommended to drop the request
+# with 444 "Connection closed without response".
+
+server
+{
+   listen 80 default_server;
+   keepalive_timeout 0;
+   return 444;
+}
+
+
+deploy@ovh-us-01:/data/MYAPP$ cat /etc/nginx/nginx.conf
+user www-data;
+worker_processes auto;
+pid /run/nginx.pid;
+worker_rlimit_nofile 64000;
+
+events
+{
+    use epoll;
+    worker_connections 10000;
+    multi_accept on;
+}
+
+http
+{
+    # Basic
+    tcp_nopush            on;
+    tcp_nodelay           on;
+    sendfile              on;
+    server_tokens         off;
+    client_header_timeout 1m;
+    client_body_timeout   1m;
+    client_max_body_size  1m;
+    types_hash_max_size   2048;
+    keepalive_timeout     15;
+    keepalive_requests    1000;
+    send_timeout          10;
+    reset_timedout_connection on;
+    server_names_hash_bucket_size 128;
+
+    # Cache
+    open_file_cache max=200000 inactive=20s;
+    open_file_cache_valid 30s;
+    open_file_cache_min_uses 2;
+    open_file_cache_errors on;
+
+    # Compression
+    etag            on;
+    gzip            on;
+    gzip_vary       on;
+    gzip_static     off;
+    gzip_comp_level 5;
+    gzip_buffers 16 8k;
+    gzip_min_length 1000;
+    gzip_disable    "msie6";
+    gzip_proxied    expired no-cache no-store private auth;
+    gzip_types      text/plain text/css text/xml text/javascript application/x-javascript application/xml application/xml+rss application/javascript application/json;
+
+    # SSL
+    ssl_session_cache shared:SSL:50m;
+    ssl_session_timeout 1d;
+    ssl_session_tickets off;
+    ssl_protocols       TLSv1.2;
+    add_header          Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+    ssl_ciphers         EECDH:+AES256:-3DES:RSA+AES:RSA+3DES:!NULL:!RC4;
+    ssl_dhparam         /etc/nginx/dhparam.pem;
+    ssl_prefer_server_ciphers on;
+    ssl_stapling on;
+    ssl_stapling_verify on;
+    resolver 8.8.8.8;
+
+    # External modules
+    include /etc/nginx/sites-enabled/*;
+    #include /etc/nginx/passenger.conf;
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+
+    # Logs
+    access_log off;
+    error_log /var/log/nginx/error.log;

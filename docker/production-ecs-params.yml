@@ -9,11 +9,11 @@ task_definition:
   services:
     nginx:
       essential: true
-    server_app:
+    be:
       essential: true
     worker_app:
       essential: true
     db:
       essential: true
-    in_memory_store:
+    redis:
       essential: true

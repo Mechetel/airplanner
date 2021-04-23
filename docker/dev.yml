@@ -1,0 +1,67 @@
+version: '3.1'
+
+volumes:
+  gems:
+  postgres:
+  redis:
+
+services:
+  db:
+    image: postgres:13
+    env_file:
+      - secret-envs/postgres-credentials.env
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+  redis:
+    image: redis:latest
+    volumes:
+      - redis:/var/lib/redis/data
+
+  be:
+    build:
+      context: dockerfiles
+      dockerfile: be.Dockerfile
+    command: >
+      /bin/bash -c "
+      bundle exec rake db:create &&
+      bundle exec rake db:migrate &&
+      exec bundle exec rails server"
+    ports:
+      - 3000:3000
+    env_file:
+      - secret-envs/secret-key-base.env
+      - secret-envs/s3.env
+      - secret-envs/postgres-credentials.env
+      - secret-envs/devise-secret-key.env
+      - secret-envs/aws.env
+    environment:
+      REDIS_URL: "redis://redis:6379"
+    volumes:
+      - .:/app
+      - gems:/bundler
+    depends_on:
+      - db
+      - redis
+    restart: on-failure
+
+  sidekiq:
+    build:
+      context: dockerfiles
+      dockerfile: be.Dockerfile
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    env_file:
+      - secret-envs/secret-key-base.env
+      - secret-envs/s3.env
+      - secret-envs/postgres-credentials.env
+      - secret-envs/devise-secret-key.env
+      - secret-envs/aws.env
+    environment:
+      REDIS_URL: "redis://redis:6379"
+    volumes:
+      - .:/app
+      - gems:/bundler
+    depends_on:
+      - db
+      - redis
+    restart: on-failure

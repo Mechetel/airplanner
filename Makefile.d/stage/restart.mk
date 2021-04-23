@@ -1,0 +1,1 @@
+stage_restart: rm_stage build stage_install_deps stage_migrate_db stage_compile_assets stage_up
