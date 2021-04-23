@@ -2,11 +2,12 @@ version: '3.1'
 
 volumes:
   assets:
+  gems:
 
 services:
   db:
     image: postgres:9.6
-    env_files:
+    env_file:
       - secret-envs/prod-db.env
     volumes:
       - /postgres:/var/lib/postgresql/data
@@ -31,7 +32,7 @@ services:
       - .:/home/www/airplanner
       - gems:/bundler
     restart: on-failure
-    env_files:
+    env_file:
       - secret-envs/prod-server.env
     depends_on:
       - db
@@ -40,7 +41,7 @@ services:
   sidekiq:
     build: dockerfiles/be.Dockerfile
     command: bundle exec sidekiq -C config/sidekiq.yml
-    env_files:
+    env_file:
       - secret-envs/prod-server.env
     depends_on:
       - db
@@ -57,7 +58,7 @@ services:
       exec nginx -g daemon off"
     volumes:
       - assets:/home/www/airplanner/public/assets
-    env_files:
+    env_file:
       - secret-envs/prod-nginx.env
     ports:
       - 80:8080
