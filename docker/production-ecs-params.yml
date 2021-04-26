@@ -11,9 +11,9 @@ task_definition:
       essential: true
     be:
       essential: true
-    worker_app:
+    sidekiq:
       essential: true
-    db:
+    postgres:
       essential: true
     redis:
       essential: true

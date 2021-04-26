@@ -27,9 +27,9 @@ dev_with_prod_db_redis_inspect:
 # 	-f docker/dev.yml \
 # 	run --rm --no-deps be bash -c '\
 # 	waitforit -host=postgres -port=5432 -timeout=30 && \
-# 	export PGPASSWORD=$$POSTGRES_PASSWORD && \
-# 	createdb --echo --port=$$POSTGRES_PORT --host=$$POSTGRES_HOST --username=$$POSTGRES_USER $$POSTGRES_DB && \
-# 	pg_restore --format=c --dbname=postgres://$$POSTGRES_USER:$$POSTGRES_PASSWORD@$$POSTGRES_HOST:$$POSTGRES_PORT/$$POSTGRES_DB tmp/dump.sql.gz && \
+# 	export PGPASSWORD=$$DATABASE_PASSWORD && \
+# 	createdb --echo --port=$$POSTGRES_PORT --host=$$POSTGRES_HOST --username=$$DATABASE_USER $$POSTGRES_DB && \
+# 	pg_restore --format=c --dbname=postgres://$$DATABASE_USER:$$DATABASE_PASSWORD@$$POSTGRES_HOST:$$POSTGRES_PORT/$$POSTGRES_DB tmp/dump.sql.gz && \
 # 	echo "Import done"'
 
 dev_with_prod_db_postgres_import_dump_full:

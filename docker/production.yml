@@ -4,7 +4,7 @@ volumes:
   server_public_folder:
 
 services:
-  db:
+  postgres:
     image: postgres:13
     env_file:
       - secret-envs/postgres-credentials.env
@@ -34,7 +34,7 @@ services:
       - secret-envs/devise-secret-key.env
       - secret-envs/aws.env
     depends_on:
-      - db
+      - postgres
       - redis
     restart: on-failure
 
@@ -48,7 +48,7 @@ services:
       - secret-envs/devise-secret-key.env
       - secret-envs/aws.env
     depends_on:
-      - db
+      - postgres
       - redis
     restart: on-failure
 

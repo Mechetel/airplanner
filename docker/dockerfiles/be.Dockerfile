@@ -17,10 +17,7 @@ RUN apt-get update && apt-get install -y yarn
 ENV APP_USER app
 
 RUN useradd -m -d /home/$APP_USER $APP_USER
-
-RUN mkdir /var/www && \
-   chown -R $APP_USER:$APP_USER /var/www && \
-   chown -R $APP_USER /home/$APP_USER
+RUN mkdir /app && chown -R $APP_USER:$APP_USER /app
 
 WORKDIR /app
 

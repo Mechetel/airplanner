@@ -3,15 +3,15 @@ version: '3.1'
 volumes:
   be_gems:
     external:
-      name: airplanner_be_gems
+      name: airplanner_global_be_gems
   postgres:
   redis:
 
 services:
-  db:
+  postgres:
     image: postgres:13
     env_file:
-      - secret-envs/postgres-credentials.env
+      - secret-envs/postgres-credentials-initial.env
     volumes:
       - postgres:/var/lib/postgresql/data
 
@@ -28,13 +28,13 @@ services:
       /bin/bash -c "
       bundle exec rake db:create &&
       bundle exec rake db:migrate &&
-      exec bundle exec rails server"
+      exec bundle exec rails server -b 0.0.0.0"
     ports:
       - 3000:3000
     env_file:
       - secret-envs/secret-key-base.env
       - secret-envs/s3.env
-      - secret-envs/postgres-credentials.env
+      - secret-envs/database-url.env
       - secret-envs/devise-secret-key.env
       - secret-envs/aws.env
     environment:
@@ -44,11 +44,10 @@ services:
 
       # sync to /app
       - ..:/app
-
-      - /app/tmp/pids/
-      - /app/tmp/sockets/
+      # - /app/tmp/pids/
+      # - /app/tmp/sockets/
     depends_on:
-      - db
+      - postgres
       - redis
     restart: on-failure
 
@@ -60,7 +59,7 @@ services:
     env_file:
       - secret-envs/secret-key-base.env
       - secret-envs/s3.env
-      - secret-envs/postgres-credentials.env
+      - secret-envs/database-url.env
       - secret-envs/devise-secret-key.env
       - secret-envs/aws.env
     environment:
@@ -70,10 +69,16 @@ services:
 
       # sync to /app
       - ..:/app
-
-      - /app/tmp/pids/
-      - /app/tmp/sockets/
     depends_on:
-      - db
+      - postgres
       - redis
     restart: on-failure
+
+  # user: pgadmin4@pgadmin.org
+  # password: admin
+  pgadmin:
+    image: fenglc/pgadmin4
+    ports:
+      - 5050:5050
+    depends_on:
+      - postgres
