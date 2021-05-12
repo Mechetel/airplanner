@@ -33,12 +33,15 @@ services:
       - 3000:3000
     env_file:
       - secret-envs/secret-key-base.env
+      - secret-envs/rails-environment-dev.env
       - secret-envs/s3.env
       - secret-envs/database-url.env
       - secret-envs/devise-secret-key.env
       - secret-envs/aws.env
+      - secret-envs/session.env
     environment:
       REDIS_URL: "redis://redis:6379"
+      WEBPACKER_DEV_SERVER_HOST: "webpack"
     volumes:
       - be_gems:/usr/local/bundle
 
@@ -49,6 +52,7 @@ services:
     depends_on:
       - postgres
       - redis
+      - webpack
     restart: on-failure
 
   sidekiq:
@@ -58,10 +62,12 @@ services:
     command: bundle exec sidekiq -C config/sidekiq.yml
     env_file:
       - secret-envs/secret-key-base.env
+      - secret-envs/rails-environment-dev.env
       - secret-envs/s3.env
       - secret-envs/database-url.env
       - secret-envs/devise-secret-key.env
       - secret-envs/aws.env
+      - secret-envs/session.env
     environment:
       REDIS_URL: "redis://redis:6379"
     volumes:
@@ -74,11 +80,28 @@ services:
       - redis
     restart: on-failure
 
+  webpack:
+    build:
+      context: dockerfiles
+      dockerfile: be.Dockerfile
+    command: ./bin/webpack-dev-server
+    volumes:
+      - be_gems:/usr/local/bundle
+
+      # sync to /app
+      - ..:/app
+    ports:
+      - '3035:3035'
+    environment:
+      NODE_ENV: development
+      RAILS_ENV: development
+      WEBPACKER_DEV_SERVER_HOST: 0.0.0.0
+
   # user: pgadmin4@pgadmin.org
   # password: admin
-  pgadmin:
-    image: fenglc/pgadmin4
-    ports:
-      - 5050:5050
-    depends_on:
-      - postgres
+  # pgadmin:
+  #   image: fenglc/pgadmin4
+  #   ports:
+  #     - 5050:5050
+  #   depends_on:
+  #     - postgres

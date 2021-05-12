@@ -1,9 +1,12 @@
-# frozen_string_literal: true
-
 class AddDeviseToUsers < ActiveRecord::Migration[6.1]
   def change
     create_table :users do |t|
       ## Database authenticatable
+      t.string :first_name
+      t.string :last_name
+      t.string :username
+      t.text :bio
+
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
 
@@ -18,8 +21,8 @@ class AddDeviseToUsers < ActiveRecord::Migration[6.1]
       # t.integer  :sign_in_count, default: 0, null: false
       # t.datetime :current_sign_in_at
       # t.datetime :last_sign_in_at
-      # t.string   :current_sign_in_ip
-      # t.string   :last_sign_in_ip
+      # t.inet     :current_sign_in_ip
+      # t.inet     :last_sign_in_ip
 
       ## Confirmable
       # t.string   :confirmation_token
@@ -33,8 +36,7 @@ class AddDeviseToUsers < ActiveRecord::Migration[6.1]
       # t.datetime :locked_at
 
 
-      # Uncomment below if timestamps were not included in your original model.
-      # t.timestamps null: false
+      t.timestamps null: false
     end
 
     add_index :users, :email,                unique: true

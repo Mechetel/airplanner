@@ -11,19 +11,13 @@ module Airplanner
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
 
-    config.middleware.use ActionDispatch::Flash
-    config.to_prepare do
-      # Load application's model / class decorators
-      Dir.glob(File.join(File.dirname(__FILE__), "../app/**/*_decorator*.rb")) do |c|
-        Rails.configuration.cache_classes ? require(c) : load(c)
-      end
+    # Enable the asset pipeline
+    config.assets.enabled = true
 
-      # Load application's view overrides
-      Dir.glob(File.join(File.dirname(__FILE__), "../app/overrides/*.rb")) do |c|
-        Rails.configuration.cache_classes ? require(c) : load(c)
-      end
-    end
-
-    config.api_only = true
+    config.browserify_rails.commandline_options = '-t babelify'
+    config.browserify_rails.source_map_environments << 'development'
+    config.browserify_rails.paths << ->(p) { p.start_with?(Rails.root.join('spec/javascripts').to_s) }
+    config.assets.paths << Rails.root.join('node_modules', 'react-datepicker', 'dist')
+    config.assets.paths << Rails.root.join('node_modules', 'react-redux-toastr', 'lib', 'css')
   end
 end

@@ -6,18 +6,36 @@ git_source(:github) do |repo_name|
 end
 
 gem 'rails', '~> 6.1.3', '>= 6.1.3.1'
-gem 'rexml'
 gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
 gem 'sass-rails', '>= 6'
+gem 'jquery-rails'
 gem 'webpacker', '~> 5.0'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.7'
+
+gem 'bootstrap-sass', '~> 3.4.1'
+gem 'sassc-rails', '>= 2.1.0'
+gem 'react-rails'
+gem 'browserify-rails'
 
 gem 'uglifier', '~> 4.1', '>= 4.1.18'
 gem 'coffee-rails', '~> 4.2'
 gem 'aws-sdk-s3', '~> 1.25'
 gem 'devise'
+
+gem 'omniauth-facebook'
+gem 'devise-bootstrap-views'
+gem 'active_model_serializers', '~> 0.10.0'
+gem 'acts_as_list'
+gem 'cancancan'
+
+# File uploader
+gem 'carrierwave'
+gem 'mini_magick'
+
+gem 'listen', '~> 3.0.5'
+gem 'rubocop', '~> 0.52.1'
 
 # Backgroud worker
 gem 'hiredis', '~> 0.6.1'
@@ -34,11 +52,29 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'selenium-webdriver'
   gem 'webdrivers'
+
+  gem 'dotenv-rails'
+
+  gem 'airborne'
+  gem 'shoulda-matchers'
+  gem 'faker'
+  gem 'database_cleaner'
+  gem 'fuubar', require: false
+
+  gem 'poltergeist'
+  gem 'capybara-screenshot'
+
+  # Js
+  gem 'jasmine-rails'
 end
 
 group :development do
   gem 'web-console', '>= 4.1.0'
   gem 'rack-mini-profiler', '~> 2.0'
-  gem 'listen', '~> 3.3'
   gem 'spring'
+  gem 'spring-watcher-listen', '~> 2.0.0'
+
+  gem 'annotate'
+  gem 'awesome_pry'
+  gem 'guard-livereload'
 end

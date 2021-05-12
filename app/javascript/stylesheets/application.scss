@@ -1,0 +1,37 @@
+@import '~bootstrap/scss/bootstrap.scss';
+@import 'react-datepicker/dist/react-datepicker.css';
+@import 'react-redux-toastr/src/styles/index';
+@import url('https://fonts.googleapis.com/css?family=Montserrat:900i&display=swap');
+
+html {
+  height: 100%;
+}
+
+body {
+  background: linear-gradient(#e66465, #9198e5);
+}
+
+.full-width {
+    width: 100vw;
+    position: relative;
+    margin-left: -50vw;
+    left: 50%;
+}
+
+.airplanner-text {
+  text-decoration: none;
+	font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  color: #00ff00;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size:120px;
+	letter-spacing:0.1em;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-width: 3px;
+  -webkit-text-stroke-color: white;
+  text-shadow:
+						8px 8px #ff1f8f,
+						20px 20px #000000;
+}

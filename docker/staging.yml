@@ -17,7 +17,7 @@ services:
       - /redis:/var/lib/redis/data
 
   be:
-    image: 840573575565.dkr.ecr.us-east-1.amazonaws.com/airplanner/be_with_deps:production
+    image: 840573575565.dkr.ecr.us-east-1.amazonaws.com/airplanner/be_with_deps:staging
     command: >
       /bin/bash -c "
       rm -rfd /server_public_folder/* &&
@@ -41,7 +41,7 @@ services:
     restart: on-failure
 
   sidekiq:
-    build: 840573575565.dkr.ecr.us-east-1.amazonaws.com/airplanner/be_with_deps:production
+    build: 840573575565.dkr.ecr.us-east-1.amazonaws.com/airplanner/be_with_deps:staging
     command: bundle exec sidekiq -C config/sidekiq.yml
     env_file:
       - secret-envs/secret-key-base.env
@@ -57,7 +57,7 @@ services:
     restart: on-failure
 
   nginx:
-    image: 840573575565.dkr.ecr.us-east-1.amazonaws.com/airplanner/nginx:production
+    image: 840573575565.dkr.ecr.us-east-1.amazonaws.com/airplanner/nginx:staging
     command: >
       /bin/bash -c "
       /usr/bin/prepare-config.sh &&

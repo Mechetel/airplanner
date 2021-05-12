@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => "/sidekiq"
 
   devise_for :users
-  root to: 'pages#index'
-  resources :pages
+  get "u/:username" => "profile#index", as: :profile
+
+  root to: 'projects#index'
+
+  resources :projects
 end

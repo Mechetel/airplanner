@@ -117,4 +117,12 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
+
+  config.action_controller.perform_caching = true
+  config.cache_store = :redis_cache_store, {
+    expires_in: 1.hour,
+    namespace: 'cache',
+    redis: { host: 'localhost', port: 6379, db: 0 },
+  }
+  config.session_store :cache_store, key: ENV['APP_SESSION_KEY']
 end
