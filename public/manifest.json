@@ -1,0 +1,604 @@
+{
+  "actions/attachmentActions.js": "/js/actions/attachmentActions-0c358683b6e6f61b4b1a.js",
+  "actions/attachmentActions.js.map": "/js/actions/attachmentActions-0c358683b6e6f61b4b1a.js.map",
+  "actions/attachmentsQueueActions.js": "/js/actions/attachmentsQueueActions-4839a79d655182434e07.js",
+  "actions/attachmentsQueueActions.js.map": "/js/actions/attachmentsQueueActions-4839a79d655182434e07.js.map",
+  "actions/commentActions.js": "/js/actions/commentActions-8174511634312108f93a.js",
+  "actions/commentActions.js.map": "/js/actions/commentActions-8174511634312108f93a.js.map",
+  "actions/fileUploaderActions.js": "/js/actions/fileUploaderActions-99eae337af20e3cd901a.js",
+  "actions/fileUploaderActions.js.map": "/js/actions/fileUploaderActions-99eae337af20e3cd901a.js.map",
+  "actions/projectActions.js": "/js/actions/projectActions-7c1fe0e86d98522fc3b0.js",
+  "actions/projectActions.js.map": "/js/actions/projectActions-7c1fe0e86d98522fc3b0.js.map",
+  "actions/taskActions.js": "/js/actions/taskActions-d089d57a284697ef9d70.js",
+  "actions/taskActions.js.map": "/js/actions/taskActions-d089d57a284697ef9d70.js.map",
+  "actions/uiActions.js": "/js/actions/uiActions-df3ec11f25b20c8013be.js",
+  "actions/uiActions.js.map": "/js/actions/uiActions-df3ec11f25b20c8013be.js.map",
+  "application.js": "/js/application-e1dcfb227b6beed2c135.js",
+  "application.js.map": "/js/application-e1dcfb227b6beed2c135.js.map",
+  "channels/consumer.js": "/js/channels/consumer-c8daaf0db178af1030fb.js",
+  "channels/consumer.js.map": "/js/channels/consumer-c8daaf0db178af1030fb.js.map",
+  "channels/index.js": "/js/channels/index-ef1be256cec39a7dbda6.js",
+  "channels/index.js.map": "/js/channels/index-ef1be256cec39a7dbda6.js.map",
+  "components/AttachmentList.js": "/js/components/AttachmentList-69b6b96ea91ccd5b30d5.js",
+  "components/AttachmentList.js.map": "/js/components/AttachmentList-69b6b96ea91ccd5b30d5.js.map",
+  "components/CommentItem.js": "/js/components/CommentItem-56d90a018adb3fc5f994.js",
+  "components/CommentItem.js.map": "/js/components/CommentItem-56d90a018adb3fc5f994.js.map",
+  "components/CommentList.js": "/js/components/CommentList-44a3fcbfc1237bef6c11.js",
+  "components/CommentList.js.map": "/js/components/CommentList-44a3fcbfc1237bef6c11.js.map",
+  "components/ProjectItem.js": "/js/components/ProjectItem-79e5405c5a39136ab0d6.js",
+  "components/ProjectItem.js.map": "/js/components/ProjectItem-79e5405c5a39136ab0d6.js.map",
+  "components/ProjectList.js": "/js/components/ProjectList-48acfdd5ccb3ad1b4b3a.js",
+  "components/ProjectList.js.map": "/js/components/ProjectList-48acfdd5ccb3ad1b4b3a.js.map",
+  "components/ProjectRoot.js": "/js/components/ProjectRoot-5172515e57fce774d659.js",
+  "components/ProjectRoot.js.map": "/js/components/ProjectRoot-5172515e57fce774d659.js.map",
+  "components/TaskItem.js": "/js/components/TaskItem-ffd596d662410b6a9aab.js",
+  "components/TaskItem.js.map": "/js/components/TaskItem-ffd596d662410b6a9aab.js.map",
+  "components/TaskList.js": "/js/components/TaskList-4e683128ea85b38ab1a0.js",
+  "components/TaskList.js.map": "/js/components/TaskList-4e683128ea85b38ab1a0.js.map",
+  "constants.js": "/js/constants-0b4bef0e16b48f8061d8.js",
+  "constants.js.map": "/js/constants-0b4bef0e16b48f8061d8.js.map",
+  "containers/DeadlinePicker.js": "/js/containers/DeadlinePicker-8b183085a837259f01a5.js",
+  "containers/DeadlinePicker.js.map": "/js/containers/DeadlinePicker-8b183085a837259f01a5.js.map",
+  "entrypoints": {
+    "actions/attachmentActions": {
+      "js": [
+        "/js/actions/attachmentActions-0c358683b6e6f61b4b1a.js"
+      ],
+      "js.map": [
+        "/js/actions/attachmentActions-0c358683b6e6f61b4b1a.js.map"
+      ]
+    },
+    "actions/attachmentsQueueActions": {
+      "js": [
+        "/js/actions/attachmentsQueueActions-4839a79d655182434e07.js"
+      ],
+      "js.map": [
+        "/js/actions/attachmentsQueueActions-4839a79d655182434e07.js.map"
+      ]
+    },
+    "actions/commentActions": {
+      "js": [
+        "/js/actions/commentActions-8174511634312108f93a.js"
+      ],
+      "js.map": [
+        "/js/actions/commentActions-8174511634312108f93a.js.map"
+      ]
+    },
+    "actions/fileUploaderActions": {
+      "js": [
+        "/js/actions/fileUploaderActions-99eae337af20e3cd901a.js"
+      ],
+      "js.map": [
+        "/js/actions/fileUploaderActions-99eae337af20e3cd901a.js.map"
+      ]
+    },
+    "actions/projectActions": {
+      "js": [
+        "/js/actions/projectActions-7c1fe0e86d98522fc3b0.js"
+      ],
+      "js.map": [
+        "/js/actions/projectActions-7c1fe0e86d98522fc3b0.js.map"
+      ]
+    },
+    "actions/taskActions": {
+      "js": [
+        "/js/actions/taskActions-d089d57a284697ef9d70.js"
+      ],
+      "js.map": [
+        "/js/actions/taskActions-d089d57a284697ef9d70.js.map"
+      ]
+    },
+    "actions/uiActions": {
+      "js": [
+        "/js/actions/uiActions-df3ec11f25b20c8013be.js"
+      ],
+      "js.map": [
+        "/js/actions/uiActions-df3ec11f25b20c8013be.js.map"
+      ]
+    },
+    "application": {
+      "js": [
+        "/js/application-e1dcfb227b6beed2c135.js"
+      ],
+      "js.map": [
+        "/js/application-e1dcfb227b6beed2c135.js.map"
+      ]
+    },
+    "channels/consumer": {
+      "js": [
+        "/js/channels/consumer-c8daaf0db178af1030fb.js"
+      ],
+      "js.map": [
+        "/js/channels/consumer-c8daaf0db178af1030fb.js.map"
+      ]
+    },
+    "channels/index": {
+      "js": [
+        "/js/channels/index-ef1be256cec39a7dbda6.js"
+      ],
+      "js.map": [
+        "/js/channels/index-ef1be256cec39a7dbda6.js.map"
+      ]
+    },
+    "components/AttachmentList": {
+      "js": [
+        "/js/components/AttachmentList-69b6b96ea91ccd5b30d5.js"
+      ],
+      "js.map": [
+        "/js/components/AttachmentList-69b6b96ea91ccd5b30d5.js.map"
+      ]
+    },
+    "components/CommentItem": {
+      "js": [
+        "/js/components/CommentItem-56d90a018adb3fc5f994.js"
+      ],
+      "js.map": [
+        "/js/components/CommentItem-56d90a018adb3fc5f994.js.map"
+      ]
+    },
+    "components/CommentList": {
+      "js": [
+        "/js/components/CommentList-44a3fcbfc1237bef6c11.js"
+      ],
+      "js.map": [
+        "/js/components/CommentList-44a3fcbfc1237bef6c11.js.map"
+      ]
+    },
+    "components/ProjectItem": {
+      "js": [
+        "/js/components/ProjectItem-79e5405c5a39136ab0d6.js"
+      ],
+      "js.map": [
+        "/js/components/ProjectItem-79e5405c5a39136ab0d6.js.map"
+      ]
+    },
+    "components/ProjectList": {
+      "js": [
+        "/js/components/ProjectList-48acfdd5ccb3ad1b4b3a.js"
+      ],
+      "js.map": [
+        "/js/components/ProjectList-48acfdd5ccb3ad1b4b3a.js.map"
+      ]
+    },
+    "components/ProjectRoot": {
+      "js": [
+        "/js/components/ProjectRoot-5172515e57fce774d659.js"
+      ],
+      "js.map": [
+        "/js/components/ProjectRoot-5172515e57fce774d659.js.map"
+      ]
+    },
+    "components/TaskItem": {
+      "js": [
+        "/js/components/TaskItem-ffd596d662410b6a9aab.js"
+      ],
+      "js.map": [
+        "/js/components/TaskItem-ffd596d662410b6a9aab.js.map"
+      ]
+    },
+    "components/TaskList": {
+      "js": [
+        "/js/components/TaskList-4e683128ea85b38ab1a0.js"
+      ],
+      "js.map": [
+        "/js/components/TaskList-4e683128ea85b38ab1a0.js.map"
+      ]
+    },
+    "constants": {
+      "js": [
+        "/js/constants-0b4bef0e16b48f8061d8.js"
+      ],
+      "js.map": [
+        "/js/constants-0b4bef0e16b48f8061d8.js.map"
+      ]
+    },
+    "containers/DeadlinePicker": {
+      "js": [
+        "/js/containers/DeadlinePicker-8b183085a837259f01a5.js"
+      ],
+      "js.map": [
+        "/js/containers/DeadlinePicker-8b183085a837259f01a5.js.map"
+      ]
+    },
+    "helpers": {
+      "js": [
+        "/js/helpers-1ed411a829f782c46bc4.js"
+      ],
+      "js.map": [
+        "/js/helpers-1ed411a829f782c46bc4.js.map"
+      ]
+    },
+    "normalizers": {
+      "js": [
+        "/js/normalizers-097a5d5e1f5f7ae3bddc.js"
+      ],
+      "js.map": [
+        "/js/normalizers-097a5d5e1f5f7ae3bddc.js.map"
+      ]
+    },
+    "reducers/attachments": {
+      "js": [
+        "/js/reducers/attachments-083953f9b018ac721c15.js"
+      ],
+      "js.map": [
+        "/js/reducers/attachments-083953f9b018ac721c15.js.map"
+      ]
+    },
+    "reducers/attachmentsQueue": {
+      "js": [
+        "/js/reducers/attachmentsQueue-8f978a5a775c7481d2ad.js"
+      ],
+      "js.map": [
+        "/js/reducers/attachmentsQueue-8f978a5a775c7481d2ad.js.map"
+      ]
+    },
+    "reducers/comments": {
+      "js": [
+        "/js/reducers/comments-3cd570d69228c2bb3990.js"
+      ],
+      "js.map": [
+        "/js/reducers/comments-3cd570d69228c2bb3990.js.map"
+      ]
+    },
+    "reducers/index": {
+      "js": [
+        "/js/reducers/index-7806e890f8d9fe0b19da.js"
+      ],
+      "js.map": [
+        "/js/reducers/index-7806e890f8d9fe0b19da.js.map"
+      ]
+    },
+    "reducers/projects": {
+      "js": [
+        "/js/reducers/projects-b2e7593dfd02b3160e7d.js"
+      ],
+      "js.map": [
+        "/js/reducers/projects-b2e7593dfd02b3160e7d.js.map"
+      ]
+    },
+    "reducers/tasks": {
+      "js": [
+        "/js/reducers/tasks-f963eddee3779bf52fda.js"
+      ],
+      "js.map": [
+        "/js/reducers/tasks-f963eddee3779bf52fda.js.map"
+      ]
+    },
+    "reducers/ui": {
+      "js": [
+        "/js/reducers/ui-4c16a2e86ae88cc9de9c.js"
+      ],
+      "js.map": [
+        "/js/reducers/ui-4c16a2e86ae88cc9de9c.js.map"
+      ]
+    },
+    "schemas": {
+      "js": [
+        "/js/schemas-2f63815492a806f65d4a.js"
+      ],
+      "js.map": [
+        "/js/schemas-2f63815492a806f65d4a.js.map"
+      ]
+    },
+    "selectors/attachment": {
+      "js": [
+        "/js/selectors/attachment-044d39ba8f42caee6a3a.js"
+      ],
+      "js.map": [
+        "/js/selectors/attachment-044d39ba8f42caee6a3a.js.map"
+      ]
+    },
+    "selectors/attachmentsQueue": {
+      "js": [
+        "/js/selectors/attachmentsQueue-03bdaba491d29fec1778.js"
+      ],
+      "js.map": [
+        "/js/selectors/attachmentsQueue-03bdaba491d29fec1778.js.map"
+      ]
+    },
+    "selectors/comment": {
+      "js": [
+        "/js/selectors/comment-551b51c37f8f6a068c63.js"
+      ],
+      "js.map": [
+        "/js/selectors/comment-551b51c37f8f6a068c63.js.map"
+      ]
+    },
+    "selectors/index": {
+      "js": [
+        "/js/selectors/index-253c1395b5feeef563d7.js"
+      ],
+      "js.map": [
+        "/js/selectors/index-253c1395b5feeef563d7.js.map"
+      ]
+    },
+    "selectors/project": {
+      "js": [
+        "/js/selectors/project-0033d51e45bfce333f42.js"
+      ],
+      "js.map": [
+        "/js/selectors/project-0033d51e45bfce333f42.js.map"
+      ]
+    },
+    "selectors/task": {
+      "js": [
+        "/js/selectors/task-2815909b04f3b050d6ff.js"
+      ],
+      "js.map": [
+        "/js/selectors/task-2815909b04f3b050d6ff.js.map"
+      ]
+    },
+    "selectors/ui": {
+      "js": [
+        "/js/selectors/ui-d6cd8e8634067551f254.js"
+      ],
+      "js.map": [
+        "/js/selectors/ui-d6cd8e8634067551f254.js.map"
+      ]
+    },
+    "server_rendering": {
+      "js": [
+        "/js/server_rendering-aa11e87be3fa7cd715c1.js"
+      ],
+      "js.map": [
+        "/js/server_rendering-aa11e87be3fa7cd715c1.js.map"
+      ]
+    },
+    "services/api": {
+      "js": [
+        "/js/services/api-29355393f61dec1f8677.js"
+      ],
+      "js.map": [
+        "/js/services/api-29355393f61dec1f8677.js.map"
+      ]
+    },
+    "services/commentService": {
+      "js": [
+        "/js/services/commentService-372c7a9a1b1fd3b50f72.js"
+      ],
+      "js.map": [
+        "/js/services/commentService-372c7a9a1b1fd3b50f72.js.map"
+      ]
+    },
+    "services/projectService": {
+      "js": [
+        "/js/services/projectService-fec9fc6026421914ec2e.js"
+      ],
+      "js.map": [
+        "/js/services/projectService-fec9fc6026421914ec2e.js.map"
+      ]
+    },
+    "services/taskService": {
+      "js": [
+        "/js/services/taskService-286205daa9c9162ae23c.js"
+      ],
+      "js.map": [
+        "/js/services/taskService-286205daa9c9162ae23c.js.map"
+      ]
+    },
+    "store/configureStore": {
+      "js": [
+        "/js/store/configureStore-c952dcb385ed14edbefe.js"
+      ],
+      "js.map": [
+        "/js/store/configureStore-c952dcb385ed14edbefe.js.map"
+      ]
+    },
+    "stylesheets/application": {
+      "js": [
+        "/js/stylesheets/application-39e59cba9bbbcbb0c8e2.js"
+      ],
+      "js.map": [
+        "/js/stylesheets/application-39e59cba9bbbcbb0c8e2.js.map"
+      ]
+    },
+    "stylesheets/comments": {
+      "js": [
+        "/js/stylesheets/comments-792f375e8db4239bc10c.js"
+      ],
+      "js.map": [
+        "/js/stylesheets/comments-792f375e8db4239bc10c.js.map"
+      ]
+    },
+    "stylesheets/control": {
+      "js": [
+        "/js/stylesheets/control-44e82a1e8597b90842d3.js"
+      ],
+      "js.map": [
+        "/js/stylesheets/control-44e82a1e8597b90842d3.js.map"
+      ]
+    },
+    "stylesheets/images/bg-create-task-button": {
+      "js": [
+        "/js/stylesheets/images/bg-create-task-button-603112dce6178533b7d9.js"
+      ],
+      "js.map": [
+        "/js/stylesheets/images/bg-create-task-button-603112dce6178533b7d9.js.map"
+      ]
+    },
+    "stylesheets/images/bg-create-task-header": {
+      "js": [
+        "/js/stylesheets/images/bg-create-task-header-d2707d3799386fc2b725.js"
+      ],
+      "js.map": [
+        "/js/stylesheets/images/bg-create-task-header-d2707d3799386fc2b725.js.map"
+      ]
+    },
+    "stylesheets/images/bg-project-header": {
+      "js": [
+        "/js/stylesheets/images/bg-project-header-517b2d5e9e6246fca7b5.js"
+      ],
+      "js.map": [
+        "/js/stylesheets/images/bg-project-header-517b2d5e9e6246fca7b5.js.map"
+      ]
+    },
+    "stylesheets/images/icon-plus": {
+      "js": [
+        "/js/stylesheets/images/icon-plus-751eb18c7a7fd8a093a8.js"
+      ],
+      "js.map": [
+        "/js/stylesheets/images/icon-plus-751eb18c7a7fd8a093a8.js.map"
+      ]
+    },
+    "stylesheets/images/icon-project-delete": {
+      "js": [
+        "/js/stylesheets/images/icon-project-delete-75b034438761e8261493.js"
+      ],
+      "js.map": [
+        "/js/stylesheets/images/icon-project-delete-75b034438761e8261493.js.map"
+      ]
+    },
+    "stylesheets/images/icon-project-edit": {
+      "js": [
+        "/js/stylesheets/images/icon-project-edit-0a731282fa187e5a27dd.js"
+      ],
+      "js.map": [
+        "/js/stylesheets/images/icon-project-edit-0a731282fa187e5a27dd.js.map"
+      ]
+    },
+    "stylesheets/images/icon-project": {
+      "js": [
+        "/js/stylesheets/images/icon-project-573494b6a30541e33d44.js"
+      ],
+      "js.map": [
+        "/js/stylesheets/images/icon-project-573494b6a30541e33d44.js.map"
+      ]
+    },
+    "stylesheets/images/icon-task-delete": {
+      "js": [
+        "/js/stylesheets/images/icon-task-delete-1847bcf4ee6b292596ce.js"
+      ],
+      "js.map": [
+        "/js/stylesheets/images/icon-task-delete-1847bcf4ee6b292596ce.js.map"
+      ]
+    },
+    "stylesheets/images/icon-task-edit": {
+      "js": [
+        "/js/stylesheets/images/icon-task-edit-6be87931055f0f046c24.js"
+      ],
+      "js.map": [
+        "/js/stylesheets/images/icon-task-edit-6be87931055f0f046c24.js.map"
+      ]
+    },
+    "stylesheets/images/icon-task-sort": {
+      "js": [
+        "/js/stylesheets/images/icon-task-sort-98d9b7519e6f76bf9318.js"
+      ],
+      "js.map": [
+        "/js/stylesheets/images/icon-task-sort-98d9b7519e6f76bf9318.js.map"
+      ]
+    },
+    "stylesheets/main": {
+      "js": [
+        "/js/stylesheets/main-9fcbbd595e4599c43075.js"
+      ],
+      "js.map": [
+        "/js/stylesheets/main-9fcbbd595e4599c43075.js.map"
+      ]
+    },
+    "stylesheets/projects": {
+      "js": [
+        "/js/stylesheets/projects-2b44e52773c349fb8bf2.js"
+      ],
+      "js.map": [
+        "/js/stylesheets/projects-2b44e52773c349fb8bf2.js.map"
+      ]
+    },
+    "stylesheets/tasks": {
+      "js": [
+        "/js/stylesheets/tasks-02178ae7276b61145519.js"
+      ],
+      "js.map": [
+        "/js/stylesheets/tasks-02178ae7276b61145519.js.map"
+      ]
+    }
+  },
+  "helpers.js": "/js/helpers-1ed411a829f782c46bc4.js",
+  "helpers.js.map": "/js/helpers-1ed411a829f782c46bc4.js.map",
+  "media/stylesheets/images/bg-create-task-button.png": "/media/stylesheets/images/bg-create-task-button-477851f4b57ae2c3098adde8b34a87f8.png",
+  "media/stylesheets/images/bg-create-task-header.png": "/media/stylesheets/images/bg-create-task-header-f640eeeb948b07af67e829d309828dfa.png",
+  "media/stylesheets/images/bg-project-header.png": "/media/stylesheets/images/bg-project-header-f78704e80953c914c290cf8cb9e9372d.png",
+  "media/stylesheets/images/icon-plus.png": "/media/stylesheets/images/icon-plus-f76d1e258a3d03984c31c2c7378c3ade.png",
+  "media/stylesheets/images/icon-project-delete.png": "/media/stylesheets/images/icon-project-delete-f4803f5301fa293c8614825ec67852db.png",
+  "media/stylesheets/images/icon-project-edit.png": "/media/stylesheets/images/icon-project-edit-bd2ae0a971f94db4803bb3483ea48120.png",
+  "media/stylesheets/images/icon-project.png": "/media/stylesheets/images/icon-project-4c87cd86d2e888b52d56098b2939278c.png",
+  "media/stylesheets/images/icon-task-delete.png": "/media/stylesheets/images/icon-task-delete-17e06521e79dd8b29b4df798f5788507.png",
+  "media/stylesheets/images/icon-task-edit.png": "/media/stylesheets/images/icon-task-edit-00d0905c648ab53942d6a16694b25910.png",
+  "media/stylesheets/images/icon-task-sort.png": "/media/stylesheets/images/icon-task-sort-6139da865988da7363d8b8a9db656956.png",
+  "normalizers.js": "/js/normalizers-097a5d5e1f5f7ae3bddc.js",
+  "normalizers.js.map": "/js/normalizers-097a5d5e1f5f7ae3bddc.js.map",
+  "reducers/attachments.js": "/js/reducers/attachments-083953f9b018ac721c15.js",
+  "reducers/attachments.js.map": "/js/reducers/attachments-083953f9b018ac721c15.js.map",
+  "reducers/attachmentsQueue.js": "/js/reducers/attachmentsQueue-8f978a5a775c7481d2ad.js",
+  "reducers/attachmentsQueue.js.map": "/js/reducers/attachmentsQueue-8f978a5a775c7481d2ad.js.map",
+  "reducers/comments.js": "/js/reducers/comments-3cd570d69228c2bb3990.js",
+  "reducers/comments.js.map": "/js/reducers/comments-3cd570d69228c2bb3990.js.map",
+  "reducers/index.js": "/js/reducers/index-7806e890f8d9fe0b19da.js",
+  "reducers/index.js.map": "/js/reducers/index-7806e890f8d9fe0b19da.js.map",
+  "reducers/projects.js": "/js/reducers/projects-b2e7593dfd02b3160e7d.js",
+  "reducers/projects.js.map": "/js/reducers/projects-b2e7593dfd02b3160e7d.js.map",
+  "reducers/tasks.js": "/js/reducers/tasks-f963eddee3779bf52fda.js",
+  "reducers/tasks.js.map": "/js/reducers/tasks-f963eddee3779bf52fda.js.map",
+  "reducers/ui.js": "/js/reducers/ui-4c16a2e86ae88cc9de9c.js",
+  "reducers/ui.js.map": "/js/reducers/ui-4c16a2e86ae88cc9de9c.js.map",
+  "schemas.js": "/js/schemas-2f63815492a806f65d4a.js",
+  "schemas.js.map": "/js/schemas-2f63815492a806f65d4a.js.map",
+  "selectors/attachment.js": "/js/selectors/attachment-044d39ba8f42caee6a3a.js",
+  "selectors/attachment.js.map": "/js/selectors/attachment-044d39ba8f42caee6a3a.js.map",
+  "selectors/attachmentsQueue.js": "/js/selectors/attachmentsQueue-03bdaba491d29fec1778.js",
+  "selectors/attachmentsQueue.js.map": "/js/selectors/attachmentsQueue-03bdaba491d29fec1778.js.map",
+  "selectors/comment.js": "/js/selectors/comment-551b51c37f8f6a068c63.js",
+  "selectors/comment.js.map": "/js/selectors/comment-551b51c37f8f6a068c63.js.map",
+  "selectors/index.js": "/js/selectors/index-253c1395b5feeef563d7.js",
+  "selectors/index.js.map": "/js/selectors/index-253c1395b5feeef563d7.js.map",
+  "selectors/project.js": "/js/selectors/project-0033d51e45bfce333f42.js",
+  "selectors/project.js.map": "/js/selectors/project-0033d51e45bfce333f42.js.map",
+  "selectors/task.js": "/js/selectors/task-2815909b04f3b050d6ff.js",
+  "selectors/task.js.map": "/js/selectors/task-2815909b04f3b050d6ff.js.map",
+  "selectors/ui.js": "/js/selectors/ui-d6cd8e8634067551f254.js",
+  "selectors/ui.js.map": "/js/selectors/ui-d6cd8e8634067551f254.js.map",
+  "server_rendering.js": "/js/server_rendering-aa11e87be3fa7cd715c1.js",
+  "server_rendering.js.map": "/js/server_rendering-aa11e87be3fa7cd715c1.js.map",
+  "services/api.js": "/js/services/api-29355393f61dec1f8677.js",
+  "services/api.js.map": "/js/services/api-29355393f61dec1f8677.js.map",
+  "services/commentService.js": "/js/services/commentService-372c7a9a1b1fd3b50f72.js",
+  "services/commentService.js.map": "/js/services/commentService-372c7a9a1b1fd3b50f72.js.map",
+  "services/projectService.js": "/js/services/projectService-fec9fc6026421914ec2e.js",
+  "services/projectService.js.map": "/js/services/projectService-fec9fc6026421914ec2e.js.map",
+  "services/taskService.js": "/js/services/taskService-286205daa9c9162ae23c.js",
+  "services/taskService.js.map": "/js/services/taskService-286205daa9c9162ae23c.js.map",
+  "store/configureStore.js": "/js/store/configureStore-c952dcb385ed14edbefe.js",
+  "store/configureStore.js.map": "/js/store/configureStore-c952dcb385ed14edbefe.js.map",
+  "stylesheets/application.js": "/js/stylesheets/application-39e59cba9bbbcbb0c8e2.js",
+  "stylesheets/application.js.map": "/js/stylesheets/application-39e59cba9bbbcbb0c8e2.js.map",
+  "stylesheets/comments.js": "/js/stylesheets/comments-792f375e8db4239bc10c.js",
+  "stylesheets/comments.js.map": "/js/stylesheets/comments-792f375e8db4239bc10c.js.map",
+  "stylesheets/control.js": "/js/stylesheets/control-44e82a1e8597b90842d3.js",
+  "stylesheets/control.js.map": "/js/stylesheets/control-44e82a1e8597b90842d3.js.map",
+  "stylesheets/images/bg-create-task-button.js": "/js/stylesheets/images/bg-create-task-button-603112dce6178533b7d9.js",
+  "stylesheets/images/bg-create-task-button.js.map": "/js/stylesheets/images/bg-create-task-button-603112dce6178533b7d9.js.map",
+  "stylesheets/images/bg-create-task-header.js": "/js/stylesheets/images/bg-create-task-header-d2707d3799386fc2b725.js",
+  "stylesheets/images/bg-create-task-header.js.map": "/js/stylesheets/images/bg-create-task-header-d2707d3799386fc2b725.js.map",
+  "stylesheets/images/bg-project-header.js": "/js/stylesheets/images/bg-project-header-517b2d5e9e6246fca7b5.js",
+  "stylesheets/images/bg-project-header.js.map": "/js/stylesheets/images/bg-project-header-517b2d5e9e6246fca7b5.js.map",
+  "stylesheets/images/icon-plus.js": "/js/stylesheets/images/icon-plus-751eb18c7a7fd8a093a8.js",
+  "stylesheets/images/icon-plus.js.map": "/js/stylesheets/images/icon-plus-751eb18c7a7fd8a093a8.js.map",
+  "stylesheets/images/icon-project-delete.js": "/js/stylesheets/images/icon-project-delete-75b034438761e8261493.js",
+  "stylesheets/images/icon-project-delete.js.map": "/js/stylesheets/images/icon-project-delete-75b034438761e8261493.js.map",
+  "stylesheets/images/icon-project-edit.js": "/js/stylesheets/images/icon-project-edit-0a731282fa187e5a27dd.js",
+  "stylesheets/images/icon-project-edit.js.map": "/js/stylesheets/images/icon-project-edit-0a731282fa187e5a27dd.js.map",
+  "stylesheets/images/icon-project.js": "/js/stylesheets/images/icon-project-573494b6a30541e33d44.js",
+  "stylesheets/images/icon-project.js.map": "/js/stylesheets/images/icon-project-573494b6a30541e33d44.js.map",
+  "stylesheets/images/icon-task-delete.js": "/js/stylesheets/images/icon-task-delete-1847bcf4ee6b292596ce.js",
+  "stylesheets/images/icon-task-delete.js.map": "/js/stylesheets/images/icon-task-delete-1847bcf4ee6b292596ce.js.map",
+  "stylesheets/images/icon-task-edit.js": "/js/stylesheets/images/icon-task-edit-6be87931055f0f046c24.js",
+  "stylesheets/images/icon-task-edit.js.map": "/js/stylesheets/images/icon-task-edit-6be87931055f0f046c24.js.map",
+  "stylesheets/images/icon-task-sort.js": "/js/stylesheets/images/icon-task-sort-98d9b7519e6f76bf9318.js",
+  "stylesheets/images/icon-task-sort.js.map": "/js/stylesheets/images/icon-task-sort-98d9b7519e6f76bf9318.js.map",
+  "stylesheets/main.js": "/js/stylesheets/main-9fcbbd595e4599c43075.js",
+  "stylesheets/main.js.map": "/js/stylesheets/main-9fcbbd595e4599c43075.js.map",
+  "stylesheets/projects.js": "/js/stylesheets/projects-2b44e52773c349fb8bf2.js",
+  "stylesheets/projects.js.map": "/js/stylesheets/projects-2b44e52773c349fb8bf2.js.map",
+  "stylesheets/tasks.js": "/js/stylesheets/tasks-02178ae7276b61145519.js",
+  "stylesheets/tasks.js.map": "/js/stylesheets/tasks-02178ae7276b61145519.js.map"
+}

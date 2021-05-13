@@ -3,6 +3,7 @@
   <head>
     <title>Airplanner</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="text/html charset=UTF-8" http-equiv="Content-Type">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -12,6 +13,11 @@
 
   <body>
     <div class='container'>
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <%= flash_messages %>
+        </div>
+      </div>
       <%= yield %>
     </div>
   </body>
