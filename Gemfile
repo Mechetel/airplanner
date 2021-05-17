@@ -23,6 +23,7 @@ gem 'uglifier', '~> 4.1', '>= 4.1.18'
 gem 'coffee-rails', '~> 4.2'
 gem 'aws-sdk-s3', '~> 1.25'
 gem 'devise'
+gem 'email_address'
 
 gem 'omniauth-facebook'
 gem 'devise-bootstrap-views'
