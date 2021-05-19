@@ -14,36 +14,6 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 RUN apt-get update && apt-get install -y yarn
 
-RUN yarn add bootstrap\
-             sass\
-             sass-loader\
-             dotenv\
-             jquery\
-             popper.js\
-             @popperjs/core\
-             @babel/core\
-             @babel/preset-react\
-             @babel/plugin-proposal-decorators\
-             @babel/plugin-proposal-class-properties\
-             moment\
-             normalizr-immutable\
-             immutable\
-             reselect\
-             react-sortable-hoc\
-             isomorphic-fetch\
-             react\
-             react-immutable-proptypes\
-             react-fileupload\
-             react-dom\
-             react-redux\
-             redux\
-             redux-thunk\
-             redux-logger\
-             redux-immutable\
-             redux-actions\
-             react-datepicker\
-             react-redux-toastr --save
-
 ENV APP_USER app
 
 RUN useradd -m -d /home/$APP_USER $APP_USER
@@ -53,6 +23,11 @@ RUN mkdir /app && chown -R $APP_USER:$APP_USER /app
 WORKDIR /app
 
 USER $APP_USER
+
+######################################################
+
+ADD package.json /app/
+RUN yarn install
 
 ######################################################
 

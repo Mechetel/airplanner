@@ -173,6 +173,9 @@ GEM
     em-websocket (0.5.2)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.6.0)
+    email_address (0.1.20)
+      netaddr (>= 2.0.4, < 3)
+      simpleidn
     erubi (1.10.0)
     eventmachine (1.2.7)
     execjs (2.7.0)
@@ -261,6 +264,7 @@ GEM
     multi_xml (0.6.0)
     multipart-post (2.1.1)
     nenv (0.3.0)
+    netaddr (2.0.4)
     netrc (0.11.0)
     nio4r (2.5.7)
     nokogiri (1.11.3)
@@ -415,6 +419,8 @@ GEM
       rack (~> 2.0)
       rack-protection (>= 1.5.0)
       redis (>= 3.3.5, < 4.2)
+    simpleidn (0.2.1)
+      unf (~> 0.1.4)
     spring (2.1.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -485,6 +491,7 @@ DEPENDENCIES
   devise
   devise-bootstrap-views
   dotenv-rails
+  email_address
   factory_bot
   faker
   fuubar

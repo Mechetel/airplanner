@@ -84,18 +84,16 @@ services:
     build:
       context: dockerfiles
       dockerfile: be.Dockerfile
-    command: ./bin/webpack-dev-server
+    command: ./bin/webpack-dev-server --host 0.0.0.0 --hot
     volumes:
       - be_gems:/usr/local/bundle
-
       # sync to /app
       - ..:/app
     ports:
-      - '3035:3035'
+      - 8080:8080
     environment:
       NODE_ENV: development
       RAILS_ENV: development
-      WEBPACKER_DEV_SERVER_HOST: 0.0.0.0
 
   # user: pgadmin4@pgadmin.org
   # password: admin
