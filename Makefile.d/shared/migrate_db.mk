@@ -7,10 +7,10 @@ migrate_db_dev:
 		rake db:migrate && \
 		rake db:schema:dump'
 
-migrate_db_dev_with_prod_db:
+migrate_db_local_production:
 	docker-compose \
-		-p "$(PROJECT_NAME)_dev_with_prod_db" \
-		-f docker/dev_with_prod_db.yml \
+		-p "$(PROJECT_NAME)_local_production" \
+		-f docker/local_production.yml \
 		run --rm be bash -c '\
 		waitforit -host=postgres -port=5432 -timeout=30 && \
 		rake db:migrate && \

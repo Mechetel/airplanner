@@ -17,9 +17,9 @@ drop_db_dev:
 		    --host=$$DATABASE_HOST --username=$$DATABASE_USER \
 		    $$DATABASE_NAME || true )'
 
-drop_db_dev_with_prod_db:
+drop_db_local_production:
 	docker-compose \
-		-p "$(PROJECT_NAME)_dev_with_prod_db" \
+		-p "$(PROJECT_NAME)_local_production" \
 		-f docker/dev.yml \
 		run --rm be bash -c '\
 		waitforit -host=postgres -port=5432 -timeout=30 && \
@@ -78,4 +78,4 @@ drop_db_tdd:
 		    --host=$$DATABASE_HOST --username=$$DATABASE_USER \
 		    $$DATABASE_NAME || true )'
 
-drop_db: drop_db_dev drop_db_dev_with_prod_db drop_db_tdd
+drop_db: drop_db_dev drop_db_local_production drop_db_tdd

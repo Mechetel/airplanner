@@ -3,15 +3,14 @@
 # docker login registry.MYCOMPANY.com
 
 DOCKER_IMAGE_MAINTAINER_NAME := srghma
-DOCKER_BUILD_EMPTY_CONTEXT := "docker/Dockerfiles"
+DOCKER_BUILD_EMPTY_CONTEXT := "docker/dockerfiles"
 
 # --- be --------------------------------------------------------------------
 
 build_be:
 	docker build \
-		--cache-from "registry.MYCOMPANY.com/$(DOCKER_IMAGE_MAINTAINER_NAME)/$(PROJECT_NAME)/be:latest" \
 		--tag "registry.MYCOMPANY.com/$(DOCKER_IMAGE_MAINTAINER_NAME)/$(PROJECT_NAME)/be:latest" \
-		-f docker/Dockerfiles/be.Dockerfile $(DOCKER_BUILD_EMPTY_CONTEXT)
+		-f docker/dockerfiles/be.Dockerfile $(DOCKER_BUILD_EMPTY_CONTEXT)
 
 push_be:
 	docker push "registry.MYCOMPANY.com/$(DOCKER_IMAGE_MAINTAINER_NAME)/$(PROJECT_NAME)/be:latest"
@@ -28,9 +27,8 @@ pull_build_push_be:
 
 build_be_with_deps:
 	docker build \
-		--cache-from "registry.MYCOMPANY.com/$(DOCKER_IMAGE_MAINTAINER_NAME)/$(PROJECT_NAME)/be_with_deps:latest" \
 		--tag "registry.MYCOMPANY.com/$(DOCKER_IMAGE_MAINTAINER_NAME)/$(PROJECT_NAME)/be_with_deps:latest" \
-		-f docker/Dockerfiles/be_with_deps.Dockerfile .
+		-f docker/dockerfiles/be_with_deps.Dockerfile .
 
 push_be_with_deps:
 	docker push "registry.MYCOMPANY.com/$(DOCKER_IMAGE_MAINTAINER_NAME)/$(PROJECT_NAME)/be_with_deps:latest"
@@ -47,9 +45,8 @@ pull_build_push_be_with_deps:
 
 build_filemanager:
 	docker build \
-		--cache-from "registry.MYCOMPANY.com/$(DOCKER_IMAGE_MAINTAINER_NAME)/$(PROJECT_NAME)/filemanager:latest" \
 		--tag "registry.MYCOMPANY.com/$(DOCKER_IMAGE_MAINTAINER_NAME)/$(PROJECT_NAME)/filemanager:latest" \
-		-f docker/Dockerfiles/filemanager.Dockerfile docker/datum/filemanager
+		-f docker/dockerfiles/filemanager.Dockerfile docker/datum/filemanager
 
 push_filemanager:
 	docker push "registry.MYCOMPANY.com/$(DOCKER_IMAGE_MAINTAINER_NAME)/$(PROJECT_NAME)/filemanager:latest"

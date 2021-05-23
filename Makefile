@@ -19,7 +19,7 @@ include Makefile.d/feature_tests/default.mk
 
 include Makefile.d/dev/default.mk
 
-include Makefile.d/dev_with_prod_db/default.mk
+include Makefile.d/local_production/default.mk
 
 include Makefile.d/tdd/default.mk
 

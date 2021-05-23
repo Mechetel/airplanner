@@ -1,25 +1,25 @@
-dev_with_prod_db_up:
+local_production_up:
 	docker-compose \
-		-p "$(PROJECT_NAME)_dev_with_prod_db" \
-		-f docker/dev_with_prod_db.yml \
+		-p "$(PROJECT_NAME)_local_production" \
+		-f docker/local_production.yml \
 		up
 
-dev_with_prod_db_run:
+local_production_run:
 	docker-compose \
-		-p "$(PROJECT_NAME)_dev_with_prod_db" \
-		-f docker/dev_with_prod_db.yml \
+		-p "$(PROJECT_NAME)_local_production" \
+		-f docker/local_production.yml \
 		run --rm --service-ports be
 
-dev_with_prod_db_seed:
+local_production_seed:
 	docker-compose \
-		-p "$(PROJECT_NAME)_dev_with_prod_db" \
-		-f docker/dev_with_prod_db.yml \
+		-p "$(PROJECT_NAME)_local_production" \
+		-f docker/local_production.yml \
 		run --rm be bash -c ' \
 		waitforit -host=postgres -port=5432 -timeout=30 && \
 		rake seed:roles && \
 		rake seed:admin'
 
-dev_with_prod_db_redis_inspect:
+local_production_redis_inspect:
 	redis-commander --redis-port 6379 --redis-host $$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' devwithproddb_redis_1)
 
 # docker-compose \
@@ -32,10 +32,10 @@ dev_with_prod_db_redis_inspect:
 # 	pg_restore --format=c --dbname=postgres://$$DATABASE_USER:$$DATABASE_PASSWORD@$$POSTGRES_HOST:$$POSTGRES_PORT/$$POSTGRES_DB tmp/dump.sql.gz && \
 # 	echo "Import done"'
 
-dev_with_prod_db_postgres_import_dump_full:
+local_production_postgres_import_dump_full:
 	docker-compose \
-		-p "$(PROJECT_NAME)_dev_with_prod_db" \
-		-f docker/dev_with_prod_db.yml \
+		-p "$(PROJECT_NAME)_local_production" \
+		-f docker/local_production.yml \
 		run --rm be bash -c '\
 		waitforit -host=postgres -port=5432 -timeout=30 && \
 		export PGPASSWORD=$$DATABASE_PASSWORD && \
@@ -44,10 +44,10 @@ dev_with_prod_db_postgres_import_dump_full:
 		pg_restore --no-owner --no-privileges --format=c --dbname=$$DATABASE_URL_WITHOUT_QUERY tmp/full.dump && \
 		echo "Import done"'
 
-dev_with_prod_db_postgres_import_dump_sql:
+local_production_postgres_import_dump_sql:
 	docker-compose \
-		-p "$(PROJECT_NAME)_dev_with_prod_db" \
-		-f docker/dev_with_prod_db.yml \
+		-p "$(PROJECT_NAME)_local_production" \
+		-f docker/local_production.yml \
 		run --rm be bash -c '\
 		waitforit -host=postgres -port=5432 -timeout=30 && \
 		export PGPASSWORD=$$DATABASE_PASSWORD && \
@@ -56,34 +56,34 @@ dev_with_prod_db_postgres_import_dump_sql:
 		(psql --dbname=$$DATABASE_URL_WITHOUT_QUERY < tmp/db_prod.sql) && \
 		echo "Import done"'
 
-dev_with_prod_db_postgres_export_dump_full:
+local_production_postgres_export_dump_full:
 	docker-compose \
-		-p "$(PROJECT_NAME)_dev_with_prod_db" \
-		-f docker/dev_with_prod_db.yml \
+		-p "$(PROJECT_NAME)_local_production" \
+		-f docker/local_production.yml \
 		run --rm --service-ports be bash -c ' \
 		pg_dump --format=c --dbname=$$DATABASE_URL_WITHOUT_QUERY > tmp/full.dump'
 
-# dev_with_prod_db_postgres_export_dump_all:
+# local_production_postgres_export_dump_all:
 # 	docker-compose \
-# 		-p "$(PROJECT_NAME)_dev_with_prod_db" \
-# 		-f docker/dev_with_prod_db.yml \
+# 		-p "$(PROJECT_NAME)_local_production" \
+# 		-f docker/local_production.yml \
 # 		run --rm --service-ports be bash -c ' \
 # 		pg_dumpall --dbname=$$DATABASE_URL > tmp/all.dump'
 
-dev_with_prod_db_elasticsearch_recreate:
+local_production_elasticsearch_recreate:
 	docker-compose \
-		-p "$(PROJECT_NAME)_dev_with_prod_db" \
-		-f docker/dev_with_prod_db.yml \
+		-p "$(PROJECT_NAME)_local_production" \
+		-f docker/local_production.yml \
 		run --rm sidekiq bash -c ' \
 		waitforit -host=elasticsearch -port=9200 -timeout=30 && \
 		rake elasticsearch:prune && \
 		rake elasticsearch:migrate_v1 && \
 		rake elasticsearch:update_index'
 
-dev_with_prod_db_test_procompile:
+local_production_test_procompile:
 	docker-compose \
-		-p "$(PROJECT_NAME)_dev_with_prod_db" \
-		-f docker/dev_with_prod_db.yml \
+		-p "$(PROJECT_NAME)_local_production" \
+		-f docker/local_production.yml \
 		run --rm --no-deps be bash -c ' \
 		export RAILS_ENV=production && \
 		rake assets:clean && \

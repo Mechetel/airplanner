@@ -1,14 +1,14 @@
-# XXX: dev_with_prod_db
+# XXX: local_production
 sitemap_refresh_without_ping:
 	docker-compose \
-		-p "$(PROJECT_NAME)_dev_with_prod_db" \
-		-f docker/dev_with_prod_db.yml \
+		-p "$(PROJECT_NAME)_local_production" \
+		-f docker/local_production.yml \
 		run --rm be rake sitemap:refresh:no_ping
 
 sitemap_install:
 	docker-compose \
-		-p "$(PROJECT_NAME)_dev_with_prod_db" \
-		-f docker/dev_with_prod_db.yml \
+		-p "$(PROJECT_NAME)_local_production" \
+		-f docker/local_production.yml \
 		run --rm be rake sitemap:install
 
 # XXX: prod

@@ -1,4 +1,5 @@
-FROM ruby:3.0
+# https://hub.docker.com/layers/ruby/library/ruby/3.0.1-buster/images/sha256-d5c828809239010c8549eeaf1f6da84f67bee7f61353e6a4a52159bf3f397aa6
+FROM ruby@sha256:d5c828809239010c8549eeaf1f6da84f67bee7f61353e6a4a52159bf3f397aa6
 
 USER root
 
