@@ -54,6 +54,12 @@ module.exports = function(api) {
           "legacy": true
         }
       ],
+      [
+        "@babel/plugin-proposal-private-methods",
+        {
+          "loose": true
+        }
+      ],
       isTestEnv && 'babel-plugin-dynamic-import-node',
       '@babel/plugin-transform-destructuring',
       [

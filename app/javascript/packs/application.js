@@ -19,10 +19,6 @@ document.addEventListener("turbolinks:load", () => {
     })
 })
 
-Rails.start()
-Turbolinks.start()
-ActiveStorage.start()
-
 var componentRequireContext = require.context("components", true);
 var ReactRailsUJS = require("react_ujs");
 ReactRailsUJS.useContext(componentRequireContext);
@@ -35,7 +31,6 @@ if (rails_env == "development")
 else
   rails_url = ""; //TODO
 
-
 window.config = {
   api_host: rails_url + "/api/v1",
   env: rails_env
@@ -47,3 +42,7 @@ window.React = require("react")
 window.ReactDOM = require("react-dom")
 window.moment = require("moment")
 window.ProjectRoot = require("../components/ProjectRoot.js").default
+
+Rails.start()
+Turbolinks.start()
+ActiveStorage.start()
