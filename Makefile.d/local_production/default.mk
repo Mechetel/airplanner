@@ -2,7 +2,7 @@ local_production_up:
 	docker-compose \
 		-p "$(PROJECT_NAME)_local_production" \
 		-f docker/local_production.yml \
-		up
+		up --build
 
 local_production_run:
 	docker-compose \

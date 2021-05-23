@@ -26,6 +26,7 @@ services:
       dockerfile: be_with_deps.Dockerfile
     command: >
       /bin/bash -c "
+      rm -f tmp/pids/server.pid &&
       bundle exec rake db:create &&
       bundle exec rake db:migrate &&
       exec bundle exec rails server -b 0.0.0.0"

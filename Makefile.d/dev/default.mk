@@ -1,3 +1,9 @@
+dev_up:
+	docker-compose \
+		-p "$(PROJECT_NAME)_dev" \
+		-f docker/dev.yml \
+		up --build
+
 dev_run:
 	docker-compose \
 		-p "$(PROJECT_NAME)_dev" \

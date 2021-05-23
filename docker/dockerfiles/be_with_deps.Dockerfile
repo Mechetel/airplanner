@@ -15,34 +15,22 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 RUN apt-get update && apt-get install -y yarn
 
-ENV APP_USER app
-
-RUN useradd -m -d /home/$APP_USER $APP_USER
-
-RUN mkdir /app && chown -R $APP_USER:$APP_USER /app
-
 WORKDIR /app
-
-USER $APP_USER
 
 ######################################################
 
-ADD package.json /app/
+COPY package.json /app/
 RUN yarn install
 
 ######################################################
 
-ADD Gemfile Gemfile.lock /app/
+COPY Gemfile Gemfile.lock /app/
 
 RUN bundle install
 
-ADD . $APP_HOME/
+COPY . /app
 
-USER root
-
-RUN chown -R $APP_USER:$APP_USER "$APP_HOME/."
-
-USER $APP_USER
-
-ENV RAILS_ENV production
-RUN bin/rails assets:precompile
+RUN SECRET_KEY_BASE=dummysecretkeybase \
+  RAILS_ENV=production \
+  DATABASE_URL=postgres://dummy_user:dummy_password@postgres:5432/dummy_db \
+  bin/rails assets:precompile
