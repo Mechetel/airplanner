@@ -31,6 +31,7 @@ module.exports = function(api) {
         '@babel/preset-env',
         {
           forceAllTransforms: true,
+          loose: true,
           useBuiltIns: 'entry',
           corejs: 3,
           modules: false,
@@ -52,12 +53,6 @@ module.exports = function(api) {
         "@babel/plugin-proposal-decorators",
         {
           "legacy": true
-        }
-      ],
-      [
-        "@babel/plugin-proposal-private-methods",
-        {
-          "loose": true
         }
       ],
       isTestEnv && 'babel-plugin-dynamic-import-node',
