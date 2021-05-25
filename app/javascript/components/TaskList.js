@@ -11,18 +11,7 @@ import { isProjectExist }     from "../packs/helpers"
 
 const SortableItem = SortableElement(params => <TaskItem {...params} />)
 
-@connect(
-  (state, ownProps) => ({
-    projectId:     ownProps.projectId.toString(),
-    taskIds:       getProject(state, { id: ownProps.projectId }).tasks,
-    projectExists: isProjectExist({ id: ownProps.projectId }),
-  }),
-  dispatch => ({
-    createTask: (...args) => dispatch(taskActions.createTask(...args)),
-    sortTask:   (...args) => dispatch(taskActions.sortTask(...args)),
-  }),
-)
-export default class TaskList extends Component {
+class TaskList extends Component {
   static propTypes = {
     taskIds:       ImmutablePropTypes.list.isRequired,
     projectExists: PropTypes.bool.isRequired,
@@ -47,7 +36,7 @@ export default class TaskList extends Component {
     ))
   }
 
-  onAdd() {
+  onAdd = () => {
     const name = this.createTaskInput.value
     const projectId = this.props.projectId
     this.props.createTask(name, projectId).then(() => {
@@ -55,7 +44,7 @@ export default class TaskList extends Component {
     })
   }
 
-  onSortEnd({ oldIndex, newIndex }) {
+  onSortEnd = ({ oldIndex, newIndex }) => {
     const id = this.props.taskIds.get(oldIndex)
     const projectId = this.props.projectId
     this.props.sortTask({ id }, projectId, oldIndex, newIndex)
@@ -99,3 +88,15 @@ export default class TaskList extends Component {
     )
   }
 }
+
+export default connect(
+  (state, ownProps) => ({
+    projectId:     ownProps.projectId.toString(),
+    taskIds:       getProject(state, { id: ownProps.projectId }).tasks,
+    projectExists: isProjectExist({ id: ownProps.projectId }),
+  }),
+  dispatch => ({
+    createTask: (...args) => dispatch(taskActions.createTask(...args)),
+    sortTask:   (...args) => dispatch(taskActions.sortTask(...args)),
+  }),
+)(TaskList);

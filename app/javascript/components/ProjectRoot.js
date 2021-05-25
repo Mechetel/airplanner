@@ -11,7 +11,7 @@ function ProjectRoot({ projects }) {
     <Provider store={configureStore(JSON.parse(projects))}>
       <div>
         <ProjectList />
-        <ReduxToastr />
+        <ReduxToastr getState={(state) => state.get('toastr')}/>
       </div>
     </Provider>
   )

@@ -13,8 +13,7 @@ const makeMapStateToProps = () => {
   })
 }
 
-@connect(makeMapStateToProps)
-export default class AttachmentList extends Component {
+class AttachmentList extends Component {
   static propTypes = {
     commentId:   PropTypes.string.isRequired,
     attachments: ImmutablePropTypes.list.isRequired,
@@ -42,3 +41,5 @@ export default class AttachmentList extends Component {
     )
   }
 }
+
+export default connect(makeMapStateToProps)(AttachmentList);

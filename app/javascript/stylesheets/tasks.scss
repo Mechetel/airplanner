@@ -1,5 +1,5 @@
 .create-task-header {
-  background: #e1e1e1 asset-url('./images/bg-create-task-header') repeat-x 0 0;
+  background: #e1e1e1 url('./images/bg-create-task-header') repeat-x 0 0;
   border: 0 solid #abafa3;
   border-width: 0 1px 1px;
   height: 50px;
@@ -7,7 +7,7 @@
   align-items: center;
 
   .create-task-in {
-    background: asset-url('./images/icon-plus') no-repeat 13px 50%;
+    background: url('./images/icon-plus') no-repeat 13px 50%;
     padding-left: 45px;
     padding-right: 5px;
     width: 100%;
@@ -20,11 +20,11 @@
   }
 
   .input-group-btn {
-    width: 1% !important;
+    width: auto;
 
     .add-task {
       border: 1px solid #447557;
-      background: asset-url('./images/bg-create-task-button') repeat-x 0 0;
+      background: url('./images/bg-create-task-button') repeat-x 0 0;
     }
   }
 }
@@ -44,7 +44,7 @@
   border-top: 1px solid #e7ebea;
   background: #fff;
   display: flex;
-  align-items: stretch;
+  align-items: center;
 
   &:hover {
     background: #fcfed5;
@@ -78,6 +78,7 @@
 .task-status {
   border-right: 1px solid #efdadf;
   width: 50px;
+  height: 40px;
   text-align: center;
 
   input {
@@ -160,15 +161,15 @@
     }
 
     .sort {
-      background: asset-url('./images/icon-task-sort') no-repeat 50% 50%;
+      background: url('./images/icon-task-sort') no-repeat 50% 50%;
     }
 
     .edit {
-      background: asset-url('./images/icon-task-edit') no-repeat 50% 50%;
+      background: url('./images/icon-task-edit') no-repeat 50% 50%;
     }
 
     .delete {
-      background: asset-url('./images/icon-task-delete') no-repeat 50% 50%;
+      background: url('./images/icon-task-delete') no-repeat 50% 50%;
     }
   }
 }

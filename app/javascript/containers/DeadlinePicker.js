@@ -28,11 +28,11 @@ export default class DeadlinePicker extends Component {
     onChange: PropTypes.func.isRequired,
   }
 
-  onRemoveDeadline() {
+  onRemoveDeadline = () => {
     this.props.onChange(null)
   }
 
-  onSetDeadline(date) {
+  onSetDeadline = (date) => {
     this.props.onChange(date)
   }
 

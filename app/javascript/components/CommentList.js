@@ -11,19 +11,7 @@ import * as commentActions from "../actions/commentActions"
 import * as fileUploaderActions from "../actions/fileUploaderActions"
 import { getTask, getUploadProgress, getAttachmentsInQueue } from "../selectors"
 
-@connect(
-  (state, ownProps) => ({
-    taskId:     ownProps.taskId.toString(),
-    commentIds: getTask(state, { id: ownProps.taskId }).comments,
-    progress:   getUploadProgress(state),
-    queue:      getAttachmentsInQueue(state),
-  }),
-  dispatch => ({
-    commentActions:  bindActionCreators(commentActions, dispatch),
-    uploaderActions: bindActionCreators(fileUploaderActions, dispatch),
-  }),
-)
-export default class CommentList extends Component {
+class CommentList extends Component {
   static propTypes = {
     taskId:          PropTypes.string.isRequired,
     commentIds:      ImmutablePropTypes.list.isRequired,
@@ -47,11 +35,11 @@ export default class CommentList extends Component {
     }
   }
 
-  onRemoveFromQueue(attachment) {
+  onRemoveFromQueue = (attachment) => {
     this.props.commentActions.removeFromQueue(attachment)
   }
 
-  onAddComment() {
+  onAddComment = () => {
     const text = this.commentTextarea.value
     this.props.commentActions.createComment(text, this.props.taskId)
       .then(() => {
@@ -88,7 +76,7 @@ export default class CommentList extends Component {
 
         <FileUpload options={this.fileUploadOptions}>
           <button
-            ref="chooseAndUpload"
+            ref= "chooseAndUpload"
             className="btn btn-primary btn-sm upload-file">
             Attach file
           </button>
@@ -121,3 +109,16 @@ export default class CommentList extends Component {
     )
   }
 }
+
+export default connect(
+  (state, ownProps) => ({
+    taskId:     ownProps.taskId.toString(),
+    commentIds: getTask(state, { id: ownProps.taskId }).comments,
+    progress:   getUploadProgress(state),
+    queue:      getAttachmentsInQueue(state),
+  }),
+  dispatch => ({
+    commentActions:  bindActionCreators(commentActions, dispatch),
+    uploaderActions: bindActionCreators(fileUploaderActions, dispatch),
+  }),
+)(CommentList);

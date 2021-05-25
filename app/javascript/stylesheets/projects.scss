@@ -3,14 +3,14 @@
 
   .project-header {
     border: 1px solid #315589;
-    background: asset-url('./images/bg-project-header');
+    background: url('images/bg-project-header');
     display: flex;
     align-items: center;
 
     .project-field {
       flex-grow: 1;
       padding-left: 47px;
-      background: transparent asset-url('./images/icon-project') no-repeat 15px 50%;
+      background: transparent url('./images/icon-project') no-repeat 15px 50%;
     }
 
     input, h2 {
@@ -48,11 +48,11 @@
       }
 
       .edit {
-        background: asset-url('./images/icon-project-edit') no-repeat 50% 50%;
+        background: url('./images/icon-project-edit') no-repeat 50% 50%;
       }
 
       .delete {
-        background: asset-url('./images/icon-project-delete') no-repeat 50% 50%;
+        background: url('./images/icon-project-delete') no-repeat 50% 50%;
       }
     }
 

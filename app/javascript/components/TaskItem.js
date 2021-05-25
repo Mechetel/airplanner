@@ -12,16 +12,7 @@ import DeadlinePicker from "../containers/DeadlinePicker"
 
 const DragHandle = SortableHandle(() => <button className="sort" />)
 
-@connect(
-  (state, ownProps) => ({
-    projectId: ownProps.projectId.toString(),
-    task:      getTask(state, ownProps),
-    selected:  isTaskSelected(state, ownProps),
-    editing:   isTaskEditing(state, ownProps),
-  }),
-  dispatch => ({ actions: bindActionCreators(taskActions, dispatch) }),
-)
-export default class TaskItem extends Component {
+class TaskItem extends Component {
   static propTypes = {
     task:      ImmutablePropTypes.record.isRequired,
     projectId: PropTypes.string.isRequired,
@@ -30,33 +21,33 @@ export default class TaskItem extends Component {
     actions:   PropTypes.objectOf(PropTypes.func.isRequired).isRequired,
   }
 
-  onEdit(task) {
+  onEdit = (task) => {
     this.props.actions.editTask(task)
   }
 
-  onToggleSelect(task) {
+  onToggleSelect = (task) => {
     this.props.actions.toggleSelection(task)
   }
 
-  onDelete(task) {
+  onDelete = (task) => {
     this.props.actions.removeTask(task, this.props.projectId)
   }
 
-  onDone(event) {
+  onDone = (event) => {
     const done = event.target.checked
 
     this.props.actions.doneTask(this.props.task, done)
   }
 
-  onSave(event) {
+  onSave = (event) => {
     this.props.actions.saveEdited(event.target.value)
   }
 
-  onCancel() {
+  onCancel = () => {
     this.props.actions.uneditTask(this.props.task)
   }
 
-  onSetDeadline(task, deadline) {
+  onSetDeadline = (task, deadline) => {
     this.props.actions.setDeadline(task, deadline)
   }
 
@@ -119,3 +110,13 @@ export default class TaskItem extends Component {
     )
   }
 }
+
+export default connect(
+  (state, ownProps) => ({
+    projectId: ownProps.projectId.toString(),
+    task:      getTask(state, ownProps),
+    selected:  isTaskSelected(state, ownProps),
+    editing:   isTaskEditing(state, ownProps),
+  }),
+  dispatch => ({ actions: bindActionCreators(taskActions, dispatch) }),
+)(TaskItem);

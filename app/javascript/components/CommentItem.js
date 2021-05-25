@@ -8,14 +8,7 @@ import AttachmentList from "./AttachmentList"
 import { getComment } from "../selectors"
 import * as commentActions from "../actions/commentActions"
 
-@connect(
-  (state, ownProps) => ({
-    taskId:  ownProps.taskId,
-    comment: getComment(state, ownProps),
-  }),
-  dispatch => ({ actions: bindActionCreators(commentActions, dispatch) }),
-)
-export default class CommentItem extends Component {
+class CommentItem extends Component {
   static propTypes = {
     comment: ImmutablePropTypes.record.isRequired,
     taskId:  PropTypes.string.isRequired,
@@ -43,3 +36,12 @@ export default class CommentItem extends Component {
     )
   }
 }
+
+export default connect(
+  (state, ownprops) => ({
+    taskid:  ownprops.taskid,
+    comment: getComment(state, ownprops),
+  }),
+  dispatch => ({ actions: bindActionCreators(commentActions, dispatch) }),
+)(CommentItem);
+

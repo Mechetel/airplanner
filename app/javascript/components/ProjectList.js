@@ -7,21 +7,14 @@ import ProjectItem         from "./ProjectItem"
 import * as projectActions from "../actions/projectActions"
 import { getProjects, isAnyProjectEditing } from "../selectors"
 
-@connect(
-  state => ({
-    projects:   getProjects(state),
-    anyEditing: isAnyProjectEditing(state),
-  }),
-  dispatch => ({ createProject: () => dispatch(projectActions.createProject()) }),
-)
-export default class ProjectList extends Component {
+class ProjectList extends Component {
   static propTypes = {
     projects:      ImmutablePropTypes.map.isRequired,
     createProject: PropTypes.func.isRequired,
     anyEditing:    PropTypes.bool.isRequired,
   }
 
-  onCreate() {
+  onCreate = () => {
     this.props.createProject()
   }
 
@@ -48,3 +41,12 @@ export default class ProjectList extends Component {
     )
   }
 }
+
+export default connect(
+  state => ({
+    projects:   getProjects(state),
+    anyEditing: isAnyProjectEditing(state),
+  }),
+  dispatch => ({ createProject: () => dispatch(projectActions.createProject()) }),
+)(ProjectList);
+

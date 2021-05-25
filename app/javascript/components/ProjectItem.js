@@ -8,33 +8,26 @@ import TaskList              from "./TaskList"
 import * as projectActions   from "../actions/projectActions"
 import { getProject, isProjectEditing } from "../selectors"
 
-@connect(
-  (state, ownProps) => ({
-    project: getProject(state, ownProps),
-    editing: isProjectEditing(state, ownProps),
-  }),
-  dispatch => ({ actions: bindActionCreators(projectActions, dispatch) }),
-)
-export default class ProjectItem extends Component {
+class ProjectItem extends Component {
   static propTypes = {
     project: ImmutablePropTypes.record.isRequired,
     editing: PropTypes.bool.isRequired,
     actions: PropTypes.objectOf(PropTypes.func.isRequired).isRequired,
   }
 
-  onCancel() {
+  onCancel = () => {
     this.props.actions.cancelEdited()
   }
 
-  onSave(event) {
+  onSave = (event) => {
     this.props.actions.saveEdited(event.target.value)
   }
 
-  onEdit(project) {
+  onEdit = (project) => {
     this.props.actions.editProject(project)
   }
 
-  onDelete(project) {
+  onDelete = (project) => {
     this.props.actions.removeProject(project)
   }
 
@@ -74,3 +67,12 @@ export default class ProjectItem extends Component {
     )
   }
 }
+
+export default connect(
+  (state, ownProps) => ({
+    project: getProject(state, ownProps),
+    editing: isProjectEditing(state, ownProps),
+  }),
+  dispatch => ({ actions: bindActionCreators(projectActions, dispatch) }),
+)(ProjectItem);
+
