@@ -42,7 +42,7 @@ services:
       - secret-envs/session.env
     environment:
       REDIS_URL: "redis://redis:6379"
-      WEBPACKER_DEV_SERVER_HOST: "webpack"
+      WEBPACKER_DEV_SERVER_HOST: webpack
     volumes:
       - be_gems:/usr/local/bundle
 
@@ -85,7 +85,7 @@ services:
     build:
       context: dockerfiles
       dockerfile: be.Dockerfile
-    command: ./bin/webpack-dev-server --host 0.0.0.0 --hot
+    command: ./bin/webpack-dev-server --hot
     volumes:
       - be_gems:/usr/local/bundle
       # sync to /app
@@ -95,6 +95,7 @@ services:
     environment:
       NODE_ENV: development
       RAILS_ENV: development
+      WEBPACKER_DEV_SERVER_HOST: 0.0.0.0
 
   # user: pgadmin4@pgadmin.org
   # password: admin
