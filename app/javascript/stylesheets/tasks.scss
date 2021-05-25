@@ -140,10 +140,15 @@
   }
 
   .label {
+    color: white;
     float: right;
-    padding: 3px 6px;
-    margin: 1px 0px 0;
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 0px 14px 0px 9px;
+    margin: 0px 7px 5px 0px;
   }
+
+  .label-danger {background-color: #1f98de;}
 }
 
 .task-control {

@@ -69,7 +69,7 @@ class CommentList extends Component {
         </div>
 
         <button
-          className="btn btn-success btn-sm pull-right"
+          className="btn btn-success mt-1 btn-sm pull-right"
           onClick={this.onAddComment} >
           Submit comment
         </button>
@@ -77,7 +77,7 @@ class CommentList extends Component {
         <FileUpload options={this.fileUploadOptions}>
           <button
             ref= "chooseAndUpload"
-            className="btn btn-primary btn-sm upload-file">
+            className="btn btn-primary mt-1 btn-sm upload-file">
             Attach file
           </button>
         </FileUpload>

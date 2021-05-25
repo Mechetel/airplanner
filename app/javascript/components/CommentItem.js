@@ -26,7 +26,7 @@ class CommentItem extends Component {
     return (
       <div className="comment">
         <a className="comment-delete" onClick={_ => this.onDelete(comment)}>
-          <span className="glyphicon glyphicon-remove"></span>
+          <span className="fas fa-times-circle"></span>
         </a>
         {text}
         { !attachments.isEmpty() &&

@@ -9,6 +9,7 @@ import "channels"
 
 require("bootstrap")
 import "../stylesheets/application";
+import "@fortawesome/fontawesome-free/js/all";
 
 document.addEventListener("turbolinks:load", () => {
     $(function () {
@@ -36,6 +37,8 @@ window.ReactDOM = require("react-dom")
 window.moment = require("moment")
 window.ProjectRoot = require("../components/ProjectRoot.js").default
 
+
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+

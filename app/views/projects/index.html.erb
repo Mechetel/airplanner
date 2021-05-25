@@ -25,3 +25,11 @@
     <%= react_component('ProjectRoot', { projects: @projects }) %>
   </div>
 </div>
+
+<script type="text/javascript">
+  setTimeout(function () {
+    if (!document.querySelector(".projects")) {
+      window.location.href="/"
+    }
+  }, 5);
+</script>

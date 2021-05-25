@@ -13,7 +13,7 @@ class DeadlineButton extends Component {
     const deadlineExist = value !== ""
 
     return (
-      <button className="btn btn-default btn-xs dropdown-toggle" onClick={onClick}>
+      <button className="btn btn-warning btn-xs dropdown-toggle" onClick={onClick}>
         <span className="glyphicon glyphicon-time" />
         { deadlineExist || <span> Set deadline</span> }
         { deadlineExist && <span> Change deadline</span> }
@@ -50,7 +50,7 @@ export default class DeadlinePicker extends Component {
           <span>
             <span> or </span>
             <button
-              className="btn btn-default btn-xs"
+              className="btn btn-danger btn-xs"
               type="button"
               onClick={this.onRemoveDeadline}>
               <span className="glyphicon glyphicon-remove" />
