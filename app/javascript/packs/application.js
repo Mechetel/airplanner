@@ -32,6 +32,9 @@ window.config = {
 
 console.log(window.config);
 
+
+
+
 window.React = require("react")
 window.ReactDOM = require("react-dom")
 window.moment = require("moment")

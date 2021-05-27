@@ -13,7 +13,6 @@ if Rails.env.development? || Rails.env.test?
     config.stop_spec_on_expectation_failure = false
     config.stop_on_spec_failure = false
     config.random = true
-
     # Options for running from the command line.
 
     # Set the formatters for the spec run.  Defaults to console output.
@@ -76,7 +75,5 @@ if Rails.env.development? || Rails.env.test?
   end
 
   # rubocop:enable Style/BlockComments
-
-  Webpacker::Compiler.watched_paths << 'spec/javascripts/**/*.js'
 end
 

@@ -51,10 +51,15 @@ group :development, :test do
   gem 'pry-rails'
   gem 'rspec'
   gem 'rspec-rails', git: 'https://github.com/rspec/rspec-rails', branch: "4-0-maintenance"
+  #
+    # A browser automation framework and ecosystem
   gem 'selenium-webdriver'
 
-  gem 'webdrivers'
+  # Keep your Selenium WebDrivers updated automatically
+  gem 'webdrivers', '~> 3.7', '>= 3.7.2'
+  gem 'capybara-selenium', '~> 0.0.6'
   gem 'dotenv-rails'
+
   gem 'webrick'
   gem 'airborne'
   gem 'shoulda-matchers'
@@ -66,8 +71,8 @@ group :development, :test do
   gem 'capybara-screenshot'
 
   # Js
+  gem 'jasmine'
   gem 'jasmine-rails'
-  gem 'jasmine-rails-webpacker', github: 'buildgroundwork/jasmine-rails-webpacker'
 end
 
 group :development do

@@ -8,5 +8,10 @@ environment.plugins.append('Provide', new webpack.ProvidePlugin({
   Popper: ['popper.js', 'default'],
   moment: 'moment'
 }))
+
+environment.plugins.prepend('Provide', new webpack.ProvidePlugin({
+  jasmineRequire: 'jasmine-core/lib/jasmine-core/jasmine.js',
+}))
+
 module.exports = environment
 environment.resolvedModules.append('project root', '.');

@@ -5,27 +5,27 @@
 
   <div class="form-group">
     <%= f.label :username %>
-    <%= f.text_field :username, autofocus: true, autocomplete: 'username', class: 'form-control' %>
+    <%= f.text_field :username, autofocus: true, autocomplete: 'username', class: 'form-control', id: 'username' %>
   </div>
 
   <div class="form-group">
     <%= f.label :first_name %>
-    <%= f.text_field :first_name, autofocus: true, autocomplete: 'first_name', class: 'form-control' %>
+    <%= f.text_field :first_name, autofocus: true, autocomplete: 'first_name', class: 'form-control', id: 'first_name' %>
   </div>
 
   <div class="form-group">
     <%= f.label :last_name %>
-    <%= f.text_field :last_name, autofocus: true, autocomplete: 'last_name', class: 'form-control' %>
+    <%= f.text_field :last_name, autofocus: true, autocomplete: 'last_name', class: 'form-control', id: 'last_name'%>
   </div>
 
   <div class="form-group">
     <%= f.label :email %>
-    <%= f.text_field :email, autofocus: true, autocomplete: 'email', class: 'form-control' %>
+    <%= f.text_field :email, autofocus: true, autocomplete: 'email', class: 'form-control', id: 'email' %>
   </div>
 
   <div class="form-group">
     <%= f.label :password %>
-    <%= f.password_field :password, autocomplete: 'current-password', class: 'form-control' %>
+    <%= f.password_field :password, autocomplete: 'current-password', class: 'form-control', id: 'password' %>
 
     <% if @minimum_password_length %>
       <small class="form-text text-muted"><%= t('devise.shared.minimum_password_length', count: @minimum_password_length) %></small>
@@ -34,7 +34,7 @@
 
   <div class="form-group">
     <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation, autocomplete: 'current-password', class: 'form-control' %>
+    <%= f.password_field :password_confirmation, autocomplete: 'current-password', class: 'form-control', id: 'password_confirmation' %>
   </div>
 
   <div class="form-group">

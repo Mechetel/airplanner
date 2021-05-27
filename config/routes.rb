@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => "/sidekiq"
   mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
 
+  if Rails.env.development? || Rails.env.test?
+    get 'jasmine', to: 'jasmine#index'
+  end
+
   devise_for :users
   devise_scope :user do
     get '/users/sign_out' => 'devise/sessions#destroy'
