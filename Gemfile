@@ -47,19 +47,19 @@ gem 'rexml'
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'capybara', '~> 2.13'
-  gem 'factory_bot'
+  gem "factory_bot_rails"
   gem 'pry-rails'
   gem 'rspec'
-  gem 'rspec-rails'
+  gem 'rspec-rails', git: 'https://github.com/rspec/rspec-rails', branch: "4-0-maintenance"
   gem 'selenium-webdriver'
+
   gem 'webdrivers'
-
   gem 'dotenv-rails'
-
+  gem 'webrick'
   gem 'airborne'
   gem 'shoulda-matchers'
   gem 'faker'
-  gem 'database_cleaner'
+  gem 'database_cleaner-active_record'
   gem 'fuubar', require: false
 
   gem 'poltergeist'
@@ -67,6 +67,7 @@ group :development, :test do
 
   # Js
   gem 'jasmine-rails'
+  gem 'jasmine-rails-webpacker', github: 'buildgroundwork/jasmine-rails-webpacker'
 end
 
 group :development do

@@ -2,6 +2,7 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
   mount Sidekiq::Web => "/sidekiq"
+  mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
 
   devise_for :users
   devise_scope :user do

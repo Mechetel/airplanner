@@ -3,7 +3,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   validates_presence_of :first_name, :last_name, :username
-  validates_with EmailAddress::ActiveRecordValidator, field: :email
+  # validates_with EmailAddress::ActiveRecordValidator, field: :email
 
   has_many :projects
 

@@ -9,3 +9,4 @@ environment.plugins.append('Provide', new webpack.ProvidePlugin({
   moment: 'moment'
 }))
 module.exports = environment
+environment.resolvedModules.append('project root', '.');
