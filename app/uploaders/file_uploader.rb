@@ -10,12 +10,12 @@ class FileUploader < CarrierWave::Uploader::Base
   end
 
   def cache_dir
-    "#{Rails.root}/tmp/uploads"
+    Rails.root.join('/tmp/uploads')
   end
 
   def serializable_hash
     {
-      url:  url,
+      url: url,
       name: file.identifier,
       size: file.size
     }

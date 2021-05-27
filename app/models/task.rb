@@ -1,7 +1,11 @@
 class Task < ApplicationRecord
   belongs_to :project
-  has_many   :comments, -> { order(created_at: :asc) }, dependent: :destroy
-  has_one    :user, through: :project
+
+  with_options inverse_of: :task do
+    has_many   :comments, -> { order(created_at: :asc) }, dependent: :destroy
+  end
+
+  has_one :user, through: :project
 
   acts_as_list scope: :project
 
@@ -11,6 +15,7 @@ class Task < ApplicationRecord
 
   def move_by_delta(delta)
     return if delta.zero?
+
     owner_tasks = project.tasks
     orig_index = owner_tasks.find_index(self)
     new_index = orig_index + delta

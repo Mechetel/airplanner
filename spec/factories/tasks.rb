@@ -7,7 +7,7 @@ FactoryBot.define do
 
   factory :invalid_task, class: 'Task' do
     done { false }
-    name { "" }
+    name { '' }
     project
   end
 

@@ -12,17 +12,17 @@ RSpec.describe Api::V1::TasksController, type: :controller do
 
     context 'with valid attributes' do
       it 'creates a task' do
-        expect {
+        expect do
           post :create, params: { task: attributes_for(:task, project_id: project.id) }
-        }.to change(Task, :count).by(1)
+        end.to change(Task, :count).by(1)
       end
     end
 
     context 'with invalid attributes' do
       it 'does not create a task' do
-        expect {
+        expect do
           post :create, params: { task: attributes_for(:invalid_task, project_id: project.id) }
-        }.to_not change(Task, :count)
+        end.to_not change(Task, :count)
       end
     end
   end
@@ -33,9 +33,9 @@ RSpec.describe Api::V1::TasksController, type: :controller do
       let!(:task) { create(:task, project_id: project.id) }
 
       it 'updates task' do
-        expect {
+        expect do
           patch :update, params: { id: task, task: attributes_for(:task) }
-        }.to_not change(Task, :count)
+        end.to_not change(Task, :count)
       end
 
       it 'return object json' do
@@ -50,9 +50,9 @@ RSpec.describe Api::V1::TasksController, type: :controller do
     let!(:task) { create(:task, project_id: project.id) }
 
     it 'deletes task' do
-      expect {
+      expect do
         delete :destroy, params: { id: task }
-      }.to change(Task, :count).by(-1)
+      end.to change(Task, :count).by(-1)
     end
   end
 

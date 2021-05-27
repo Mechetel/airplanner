@@ -2,10 +2,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  validates_presence_of :first_name, :last_name, :username
+  validates :first_name, :last_name, :username, presence: true
   # validates_with EmailAddress::ActiveRecordValidator, field: :email
 
-  has_many :projects
+  has_many :projects, dependent: :destroy
 
   def full_name
     "#{first_name} #{last_name}"

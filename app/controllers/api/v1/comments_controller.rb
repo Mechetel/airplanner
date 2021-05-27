@@ -8,7 +8,7 @@ module Api
 
         if @comment.save
           Attachment.where(id: params[:attachments])
-                    .update_all(comment_id: @comment.id)
+                    .update(comment_id: @comment.id)
           render json: @comment
         else
           render_errors(@comment.errors, :unprocessable_entity)

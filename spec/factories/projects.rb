@@ -5,7 +5,7 @@ FactoryBot.define do
   end
 
   factory :invalid_project, class: 'Project' do
-    name { "" }
+    name { '' }
     user
   end
 end

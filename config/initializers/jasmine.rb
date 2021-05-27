@@ -76,4 +76,3 @@ if Rails.env.development? || Rails.env.test?
 
   # rubocop:enable Style/BlockComments
 end
-

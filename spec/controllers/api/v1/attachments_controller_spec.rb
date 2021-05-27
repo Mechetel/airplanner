@@ -6,17 +6,17 @@ RSpec.describe Api::V1::AttachmentsController, type: :controller do
   describe 'POST #create' do
     context 'with valid attributes' do
       it 'uploads the file' do
-        expect {
+        expect do
           post :create, params: attributes_for(:attachment)
-        }.to change(Attachment, :count).by(0)
+        end.to change(Attachment, :count).by(0)
       end
     end
 
     context 'with invalid attributes' do
       it 'does not upload the file' do
-        expect {
+        expect do
           post :create, params: attributes_for(:invalid_attachment)
-        }.to_not change(Attachment, :count)
+        end.to_not change(Attachment, :count)
       end
     end
   end

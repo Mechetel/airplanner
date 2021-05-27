@@ -1,0 +1,30 @@
+require: rubocop-rails
+
+Rails:
+  Enabled: true
+
+Metrics/BlockLength:
+  Exclude:
+    - 'Rakefile'
+    - '**/*.rake'
+    - 'test/**/*.rb'
+    - 'config/environments/**/*.rb'
+    - 'spec/controllers/api/v1/*.rb'
+
+AllCops:
+  NewCops: enable
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Rails/UniqueValidationWithoutIndex:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 155
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 30

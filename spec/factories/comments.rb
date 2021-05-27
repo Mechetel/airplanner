@@ -6,6 +6,6 @@ FactoryBot.define do
 
   factory :invalid_comment, class: 'Comment' do
     task
-    text { "" }
+    text { '' }
   end
 end

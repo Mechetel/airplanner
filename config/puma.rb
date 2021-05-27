@@ -1,6 +1,6 @@
 begin
   return if Rails.env.test?
-rescue
+rescue StandardError
   nil
 end
 

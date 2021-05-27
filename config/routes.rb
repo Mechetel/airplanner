@@ -1,18 +1,16 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  mount Sidekiq::Web => "/sidekiq"
+  mount Sidekiq::Web => '/sidekiq'
   mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
 
-  if Rails.env.development? || Rails.env.test?
-    get 'jasmine', to: 'jasmine#index'
-  end
+  get 'jasmine', to: 'jasmine#index' if Rails.env.development? || Rails.env.test?
 
   devise_for :users
   devise_scope :user do
     get '/users/sign_out' => 'devise/sessions#destroy'
   end
-  get "u/:username" => "profile#index", as: :profile
+  get 'u/:username' => 'profile#index', as: :profile
 
   root to: 'projects#index'
 
@@ -26,7 +24,7 @@ Rails.application.routes.draw do
         put :deadline, on: :member
       end
 
-      resources :comments, only: [:create, :destroy]
+      resources :comments, only: %i[create destroy]
 
       resources :attachments, only: [:create]
     end
