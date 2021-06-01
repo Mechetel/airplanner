@@ -2,8 +2,6 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
-  mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
-
   get 'jasmine', to: 'jasmine#index' if Rails.env.development? || Rails.env.test?
 
   devise_for :users
