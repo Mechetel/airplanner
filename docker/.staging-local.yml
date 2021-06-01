@@ -2,6 +2,8 @@ version: '3.1'
 
 volumes:
   server_public_folder:
+  postgres:
+  redis:
 
 services:
   postgres:
@@ -9,14 +11,14 @@ services:
     env_file:
       - secret-envs/postgres-credentials.env
     volumes:
-      - /airplanner-datum/postgres:/var/lib/postgresql/data
+      - postgres:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "postgres"]
 
   redis:
     image: redis:latest
     volumes:
-      - /airplanner-datum/redis:/var/lib/redis/data
+      - redis:/var/lib/redis/data
     healthcheck:
       test: ["CMD", "redis-cli", "-h", "localhost", "ping"]
 
