@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3'
 
 volumes:
   server_public_folder:
@@ -7,7 +7,7 @@ services:
   postgres:
     image: postgres:13
     env_file:
-      - secret-envs/postgres-credentials.env
+      - secret-envs/postgres-credentials-initial.env
     volumes:
       - /airplanner-datum/postgres:/var/lib/postgresql/data
     healthcheck:
@@ -21,7 +21,7 @@ services:
       test: ["CMD", "redis-cli", "-h", "localhost", "ping"]
 
   be:
-    image: 840573575565.dkr.ecr.us-east-1.amazonaws.com/airplanner/be_with_deps:staging
+    image: 840573575565.dkr.ecr.us-east-1.amazonaws.com/staging-airplanner/be_with_deps:latest
     command: >
       /bin/bash -c "
       rm -rfd /server_public_folder/* &&
@@ -34,8 +34,8 @@ services:
     env_file:
       - secret-envs/secret-key-base.env
       - secret-envs/rails-environment-prod.env
-      - secret-envs/s3-production.env
-      - secret-envs/postgres-credentials.env
+      - secret-envs/s3-staging.env
+      - secret-envs/postgres-credentials-initial.env
       - secret-envs/devise-secret-key.env
       - secret-envs/aws.env
       - secret-envs/session.env
@@ -49,13 +49,13 @@ services:
       test: ["CMD", "curl", "-f", "http://localhost:3000"]
 
   sidekiq:
-    build: 840573575565.dkr.ecr.us-east-1.amazonaws.com/airplanner/be_with_deps:staging
+    image: 840573575565.dkr.ecr.us-east-1.amazonaws.com/staging-airplanner/be_with_deps:latest
     command: bundle exec sidekiq -C config/sidekiq.yml
     env_file:
       - secret-envs/secret-key-base.env
       - secret-envs/rails-environment-prod.env
-      - secret-envs/s3-production.env
-      - secret-envs/postgres-credentials.env
+      - secret-envs/s3-staging.env
+      - secret-envs/postgres-credentials-initial.env
       - secret-envs/devise-secret-key.env
       - secret-envs/aws.env
       - secret-envs/session.env
@@ -65,7 +65,7 @@ services:
     restart: on-failure
 
   nginx:
-    image: 840573575565.dkr.ecr.us-east-1.amazonaws.com/airplanner/nginx:staging
+    image: 840573575565.dkr.ecr.us-east-1.amazonaws.com/staging-airplanner/nginx:latest
     command: >
       /bin/bash -c "
       /usr/bin/prepare-config.sh &&
@@ -75,7 +75,7 @@ services:
     environment:
       NGINX_APP_NAME: be
       NGINX_APP_PORT: 3000
-      NGINX_APP_VHOST: TODO # curl http://169.254.169.254/latest/meta-data/public-hostname
+      NGINX_APP_VHOST: ec2-3-84-255-26.compute-1.amazonaws.com
       NGINX_STATIC_PATH: /server_public_folder
     ports:
       - 80:8080

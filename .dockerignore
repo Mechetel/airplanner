@@ -37,6 +37,5 @@ yarn-debug.log*
 .yarn-integrity
 /docs
 /docker/*
-!/docker/datum
 /.gitignore
 /.browserslistrc
