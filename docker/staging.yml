@@ -30,7 +30,7 @@ services:
     env_file:
       - secret-envs/secret-key-base.env
       - secret-envs/rails-environment-prod.env
-      - secret-envs/s3.env
+      - secret-envs/s3-production.env
       - secret-envs/postgres-credentials.env
       - secret-envs/devise-secret-key.env
       - secret-envs/aws.env
@@ -46,7 +46,7 @@ services:
     env_file:
       - secret-envs/secret-key-base.env
       - secret-envs/rails-environment-prod.env
-      - secret-envs/s3.env
+      - secret-envs/s3-production.env
       - secret-envs/postgres-credentials.env
       - secret-envs/devise-secret-key.env
       - secret-envs/aws.env
