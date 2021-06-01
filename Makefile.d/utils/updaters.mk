@@ -32,4 +32,4 @@ yarn_upgrade:
 
 # https://github.com/maxcnunes/waitforit
 update_wait_for_it:
-	WAITFORIT_VERSION="v1.3.1" && wget --show-progress -q -O ./scripts/waitforit https://github.com/maxcnunes/waitforit/releases/download/$$WAITFORIT_VERSION/waitforit-linux_amd64 && chmod +x ./scripts/waitforit
+	mkdir -p ./scripts && WAITFORIT_VERSION="v1.3.1" && wget --show-progress -q -O ./scripts/waitforit https://github.com/maxcnunes/waitforit/releases/download/$$WAITFORIT_VERSION/waitforit-linux_amd64 && chmod +x ./scripts/waitforit
