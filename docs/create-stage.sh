@@ -9,7 +9,7 @@ export MY_PROJECT_NAME=staging-airplanner
 
 aws ec2 create-security-group --group-name $MY_PROJECT_NAME-server-app --description "Staging Air project Server App"
 
-export STAGING_SERVER_APP_SG=sg-0cdbdf15445498472
+export STAGING_SERVER_APP_SG=sg-0530ba5000274ac39
 
 aws ec2 authorize-security-group-ingress \
   --group-id $STAGING_SERVER_APP_SG \
@@ -28,6 +28,8 @@ aws s3api create-bucket --bucket $MY_PROJECT_NAME-bucket
 # {
 #     "Location": "/staging-airplanner-bucket"
 # }
+
+export AWS_DEFAULT_REGION=us-east-1
 
 ecs-cli configure --region $AWS_DEFAULT_REGION --cluster $MY_PROJECT_NAME-cluster --config-name $MY_PROJECT_NAME-cluster
 # INFO[0000] Saved ECS CLI cluster configuration staging-airplanner-cluster.
@@ -58,6 +60,9 @@ ecs-cli up --force \
   --security-group $STAGING_SERVER_APP_SG \
   --cluster-config $MY_PROJECT_NAME-cluster \
   --verbose
+
+export EC2_PUBLIC_DOMAIN=34.230.26.168
+ssh -i ~/.ssh/staging-airplanner-keypair.pem ec2-user@$EC2_PUBLIC_DOMAIN
 
 aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 840573575565.dkr.ecr.us-east-1.amazonaws.com
 
