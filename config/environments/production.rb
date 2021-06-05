@@ -122,7 +122,7 @@ Rails.application.configure do
   config.cache_store = :redis_cache_store, {
     expires_in: 1.hour,
     namespace: 'cache',
-    redis: { host: 'localhost', port: 6379, db: 0 }
+    url: ENV.fetch('REDIS_URL')
   }
-  config.session_store :cache_store, key: ENV['APP_SESSION_KEY']
+  config.session_store :cache_store, key: ENV.fetch('APP_SESSION_KEY')
 end

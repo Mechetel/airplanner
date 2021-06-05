@@ -41,7 +41,7 @@ services:
       - secret-envs/aws.env
       - secret-envs/session.env
     environment:
-      REDIS_URL: "redis://redis:6379"
+      REDIS_URL: "redis://redis:6379/0"
     volumes:
       - be_gems:/usr/local/bundle
 
@@ -68,7 +68,7 @@ services:
       - secret-envs/aws.env
       - secret-envs/session.env
     environment:
-      REDIS_URL: "redis://redis:6379"
+      REDIS_URL: "redis://redis:6379/0"
     volumes:
       - be_gems:/usr/local/bundle
 

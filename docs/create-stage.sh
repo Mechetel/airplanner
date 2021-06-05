@@ -100,7 +100,7 @@ aws ecs create-service \
 aws ecs update-service \
   --service "$MY_PROJECT_NAME-service" \
   --cluster "$MY_PROJECT_NAME-cluster" \
-  --task-definition "staging-airplanner-cluster:14" \
+  --task-definition "staging-airplanner-cluster:16" \
   --desired-count 1 \
   --deployment-configuration "maximumPercent=200,minimumHealthyPercent=50"
 

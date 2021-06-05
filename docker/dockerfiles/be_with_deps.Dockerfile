@@ -33,6 +33,8 @@ RUN bundle install
 COPY . /app
 
 RUN SECRET_KEY_BASE=dummysecretkeybase \
+  RACK_ENV=production \
   RAILS_ENV=production \
+  REDIS_URL=redis://dummyredis:1234 \
   DATABASE_URL=postgres://dummy_user:dummy_password@postgres:5432/dummy_db \
   bin/rails assets:precompile

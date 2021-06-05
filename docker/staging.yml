@@ -10,15 +10,15 @@ services:
       - secret-envs/postgres-credentials-initial.env
     volumes:
       - /airplanner-datum/postgres:/var/lib/postgresql/data
-    # healthcheck:
-    #   test: ["CMD", "pg_isready", "-U", "postgres"]
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
 
   redis:
     image: redis:latest
     volumes:
       - /airplanner-datum/redis:/var/lib/redis/data
-    # healthcheck:
-    #   test: ["CMD", "redis-cli", "-h", "localhost", "ping"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "-h", "localhost", "ping"]
 
   be:
     image: 840573575565.dkr.ecr.us-east-1.amazonaws.com/staging-airplanner/be_with_deps:latest
@@ -35,6 +35,7 @@ services:
       exec bundle exec puma -C config/puma.rb"
     volumes:
       - server_public_folder:/server_public_folder
+      - /var/logs/airplanner-stage-be:/app/log
     env_file:
       - secret-envs/secret-key-base.env
       - envs/rails-environment-prod.env
@@ -44,12 +45,11 @@ services:
       - secret-envs/aws.env
       - secret-envs/session.env
       - secret-envs/database-url.env
+    environment:
+      REDIS_URL: "redis://redis:6379/0"
     links:
       - postgres
       - redis
-    # restart: on-failure
-    # ports:
-    #   - 3000
     # healthcheck:
     #   test: ["CMD", "curl", "-f", "http://localhost:3000"]
 
@@ -69,12 +69,13 @@ services:
       - secret-envs/aws.env
       - secret-envs/session.env
       - secret-envs/database-url.env
+    volumes:
+      - /var/logs/airplanner-stage-sidekiq:/app/log
     environment:
-      REDIS_URL: "redis://redis:6379"
+      REDIS_URL: "redis://redis:6379/0"
     links:
       - postgres
       - redis
-    # restart: on-failure
 
   nginx:
     image: 840573575565.dkr.ecr.us-east-1.amazonaws.com/staging-airplanner/nginx:latest
@@ -86,6 +87,7 @@ services:
       exec nginx -g 'daemon off;'"
     volumes:
       - server_public_folder:/server_public_folder
+      - /var/logs/airplanner-stage-nginx:/var/log
     environment:
       NGINX_APP_NAME: be
       NGINX_APP_PORT: 3000
