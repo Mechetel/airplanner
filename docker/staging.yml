@@ -87,7 +87,7 @@ services:
       exec nginx -g 'daemon off;'"
     volumes:
       - server_public_folder:/server_public_folder
-      - /var/logs/airplanner-stage-nginx:/var/log
+      - /var/logs/airplanner-stage-nginx:/var/log/nginx
     environment:
       NGINX_APP_NAME: be
       NGINX_APP_PORT: 3000

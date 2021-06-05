@@ -17,6 +17,4 @@ RUN touch /var/run/nginx.pid && \
     chown -R www-data:www-data /etc/nginx && \
     chown -R www-data:www-data /var/log
 
-USER www-data
-
 COPY prepare-config /usr/bin/prepare-config
