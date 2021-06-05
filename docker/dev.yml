@@ -97,26 +97,26 @@ services:
       RAILS_ENV: development
       WEBPACKER_DEV_SERVER_HOST: 0.0.0.0
 
-  nginx:
-    image: 840573575565.dkr.ecr.us-east-1.amazonaws.com/staging-airplanner/nginx:latest
-    # build:
-    #   context: datum/nginx/
-    #   dockerfile: dockerfiles/nginx.Dockerfile
-    command: >
-      /bin/bash -c "
-      /usr/bin/prepare-config &&
-      exec nginx -g daemon off"
-    # volumes:
-    #   - server_public_folder:/server_public_folder
-    environment:
-      NGINX_APP_NAME: be
-      NGINX_APP_PORT: 3000
-      NGINX_APP_VHOST: ec2-3-84-255-26.compute-1.amazonaws.com
-      NGINX_STATIC_PATH: /server_public_folder
-    ports:
-      - 80:8080
-    depends_on:
-      - be
+#   nginx:
+#     image: 840573575565.dkr.ecr.us-east-1.amazonaws.com/staging-airplanner/nginx:latest
+#     # build:
+#     #   context: datum/nginx/
+#     #   dockerfile: dockerfiles/nginx.Dockerfile
+#     command: >
+#       /bin/bash -c "
+#       /usr/bin/prepare-config &&
+#       exec nginx -g daemon off"
+#     # volumes:
+#     #   - server_public_folder:/server_public_folder
+#     environment:
+#       NGINX_APP_NAME: be
+#       NGINX_APP_PORT: 3000
+#       NGINX_APP_VHOST: ec2-3-84-255-26.compute-1.amazonaws.com
+#       NGINX_STATIC_PATH: /server_public_folder
+#     ports:
+#       - 80:8080
+#     depends_on:
+#       - be
 
   # user: pgadmin4@pgadmin.org
   # password: admin

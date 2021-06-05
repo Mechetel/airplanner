@@ -34,6 +34,8 @@ gem 'omniauth-facebook'
 # File uploader
 gem 'carrierwave'
 gem 'mini_magick'
+gem 'fog'
+gem 'fog-aws'
 
 gem 'listen', '~> 3.0.5'
 gem 'rubocop'
