@@ -34,7 +34,7 @@ services:
       - 3000:3000
     env_file:
       - secret-envs/secret-key-base.env
-      - secret-envs/rails-environment-dev.env
+      - envs/rails-environment-dev.env
       - secret-envs/s3-production.env
       - secret-envs/database-url.env
       - secret-envs/devise-secret-key.env
@@ -61,7 +61,7 @@ services:
     command: bundle exec sidekiq -C config/sidekiq.yml
     env_file:
       - secret-envs/secret-key-base.env
-      - secret-envs/rails-environment-dev.env
+      - envs/rails-environment-dev.env
       - secret-envs/s3-production.env
       - secret-envs/database-url.env
       - secret-envs/devise-secret-key.env

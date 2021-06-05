@@ -8,12 +8,12 @@ task_definition:
 
   services:
     nginx:
-      essential: true
+      essential: false
     be:
-      essential: true
+      essential: false
     sidekiq:
-      essential: true
+      essential: false
     postgres:
       essential: true
     redis:
-      essential: true
+      essential: false

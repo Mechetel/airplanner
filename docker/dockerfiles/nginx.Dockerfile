@@ -2,8 +2,9 @@ FROM nginx:1.16.0
 
 USER root
 
-ENV BUILD_PACKAGES curl
-RUN apt-get update -qq && apt-get install -y $BUILD_PACKAGES
+RUN apt-get update -qq && apt-get install -y curl wget
+
+RUN wget --show-progress -q -O /usr/bin/waitforit https://github.com/maxcnunes/waitforit/releases/download/v1.3.1/waitforit-linux_amd64 && chmod +x /usr/bin/waitforit
 
 RUN rm /usr/share/nginx/html/*
 

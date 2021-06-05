@@ -29,7 +29,7 @@ services:
       - server_public_folder:/server_public_folder
     env_file:
       - secret-envs/secret-key-base.env
-      - secret-envs/rails-environment-prod.env
+      - envs/rails-environment-prod.env
       - secret-envs/s3-production.env
       - secret-envs/postgres-credentials.env
       - secret-envs/devise-secret-key.env
@@ -45,7 +45,7 @@ services:
     command: bundle exec sidekiq -C config/sidekiq.yml
     env_file:
       - secret-envs/secret-key-base.env
-      - secret-envs/rails-environment-prod.env
+      - envs/rails-environment-prod.env
       - secret-envs/s3-production.env
       - secret-envs/postgres-credentials.env
       - secret-envs/devise-secret-key.env
@@ -60,7 +60,7 @@ services:
     image: 840573575565.dkr.ecr.us-east-1.amazonaws.com/airplanner/nginx:production
     command: >
       /bin/bash -c "
-      /usr/bin/prepare-config.sh &&
+      /usr/bin/prepare-config &&
       exec nginx -g daemon off"
     volumes:
       - server_public_folder:/server_public_folder

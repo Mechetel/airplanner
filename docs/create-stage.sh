@@ -2,14 +2,13 @@ nix-env -iA nixpkgs.amazon-ecs-cli
 nix-env -iA nixpkgs.awscli2
 
 PATH=/nix/store/0i7bg466cfsxpnxljqrvqyzip36hf5j2-awscli2-2.1.35/bin/:$PATH
-
 export $(grep -v '^#' docker/secret-envs/aws.env | xargs)
-
 export MY_PROJECT_NAME=staging-airplanner
+export STAGING_SERVER_APP_SG=sg-0530ba5000274ac39
+aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 840573575565.dkr.ecr.us-east-1.amazonaws.com
 
 aws ec2 create-security-group --group-name $MY_PROJECT_NAME-server-app --description "Staging Air project Server App"
 
-export STAGING_SERVER_APP_SG=sg-0530ba5000274ac39
 
 aws ec2 authorize-security-group-ingress \
   --group-id $STAGING_SERVER_APP_SG \
@@ -64,8 +63,6 @@ ecs-cli up --force \
 export EC2_PUBLIC_DOMAIN=34.230.26.168
 ssh -i ~/.ssh/staging-airplanner-keypair.pem ec2-user@$EC2_PUBLIC_DOMAIN
 
-aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 840573575565.dkr.ecr.us-east-1.amazonaws.com
-
 aws ecr create-repository --repository-name $MY_PROJECT_NAME/be_with_deps
 aws ecr create-repository --repository-name $MY_PROJECT_NAME/nginx
 
@@ -73,12 +70,11 @@ docker build \
   --tag "840573575565.dkr.ecr.us-east-1.amazonaws.com/staging-airplanner/be_with_deps:latest" \
   -f docker/dockerfiles/be_with_deps.Dockerfile .
 
-docker push "840573575565.dkr.ecr.us-east-1.amazonaws.com/staging-airplanner/be_with_deps:latest"
-
 docker build \
   --tag "840573575565.dkr.ecr.us-east-1.amazonaws.com/staging-airplanner/nginx:latest" \
   -f docker/dockerfiles/nginx.Dockerfile docker/datum/nginx/
 
+docker push "840573575565.dkr.ecr.us-east-1.amazonaws.com/staging-airplanner/be_with_deps:latest"
 docker push "840573575565.dkr.ecr.us-east-1.amazonaws.com/staging-airplanner/nginx:latest"
 
 export YOUR_ECR_ID=840573575565
@@ -103,8 +99,8 @@ aws ecs create-service \
 
 aws ecs update-service \
   --service "$MY_PROJECT_NAME-service" \
-  --cluster $MY_PROJECT_NAME-cluster \
-  --task-definition "staging-airplanner-cluster:2" \
+  --cluster "$MY_PROJECT_NAME-cluster" \
+  --task-definition "staging-airplanner-cluster:14" \
   --desired-count 1 \
   --deployment-configuration "maximumPercent=200,minimumHealthyPercent=50"
 
