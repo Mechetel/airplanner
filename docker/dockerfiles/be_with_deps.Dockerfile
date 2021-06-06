@@ -35,6 +35,7 @@ COPY . /app
 RUN SECRET_KEY_BASE=dummysecretkeybase \
   RACK_ENV=production \
   RAILS_ENV=production \
+  RAILS_SERVE_STATIC_FILES=true \
   REDIS_URL=redis://dummyredis:1234 \
   APP_SESSION_KEY=dummy_app_session_key \
   DATABASE_URL=postgres://dummy_user:dummy_password@postgres:5432/dummy_db \
