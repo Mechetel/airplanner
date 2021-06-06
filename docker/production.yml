@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3'
 
 volumes:
   server_public_folder:
@@ -7,69 +7,93 @@ services:
   postgres:
     image: postgres:13
     env_file:
-      - secret-envs/postgres-credentials.env
+      - secret-envs/postgres-credentials-initial.env
     volumes:
-      - /postgres:/var/lib/postgresql/data
+      - /airplanner-datum/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
 
   redis:
     image: redis:latest
     volumes:
-      - /redis:/var/lib/redis/data
+      - /airplanner-datum/redis:/var/lib/redis/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-h", "localhost", "ping"]
 
   be:
-    image: 840573575565.dkr.ecr.us-east-1.amazonaws.com/airplanner/be_with_deps:production
+    image: 840573575565.dkr.ecr.us-east-1.amazonaws.com/production-airplanner/be_with_deps:latest
     command: >
       /bin/bash -c "
       rm -rfd /server_public_folder/* &&
       cp -R /app/public/* /server_public_folder/ &&
+      waitforit -host=postgres -port=5432 -timeout=20 &&
+      echo 'postgres found' &&
       bundle exec rake db:create &&
       bundle exec rake db:migrate &&
+      waitforit -host=redis -port=6379 -timeout=20 &&
+      echo 'redis found' &&
       exec bundle exec puma -C config/puma.rb"
     volumes:
       - server_public_folder:/server_public_folder
+      - /var/logs/airplanner-stage-be:/app/log
     env_file:
       - secret-envs/secret-key-base.env
       - envs/rails-environment-prod.env
       - secret-envs/s3-production.env
-      - secret-envs/postgres-credentials.env
+      - secret-envs/postgres-credentials-initial.env
       - secret-envs/devise-secret-key.env
       - secret-envs/aws.env
       - secret-envs/session.env
-    depends_on:
+      - secret-envs/database-url-production.env
+    environment:
+      REDIS_URL: "redis://redis:6379/0"
+    links:
       - postgres
       - redis
-    restart: on-failure
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost:3000"]
 
   sidekiq:
-    build: 840573575565.dkr.ecr.us-east-1.amazonaws.com/airplanner/be_with_deps:production
-    command: bundle exec sidekiq -C config/sidekiq.yml
+    image: 840573575565.dkr.ecr.us-east-1.amazonaws.com/production-airplanner/be_with_deps:latest
+    command: >
+      /bin/bash -c "
+      waitforit -host=redis -port=6379 -timeout=20 &&
+      echo 'redis found' &&
+      exec bundle exec sidekiq -C config/sidekiq.yml"
     env_file:
       - secret-envs/secret-key-base.env
       - envs/rails-environment-prod.env
       - secret-envs/s3-production.env
-      - secret-envs/postgres-credentials.env
+      - secret-envs/postgres-credentials-initial.env
       - secret-envs/devise-secret-key.env
       - secret-envs/aws.env
       - secret-envs/session.env
-    depends_on:
+      - secret-envs/database-url-production.env
+    volumes:
+      - /var/logs/airplanner-stage-sidekiq:/app/log
+    environment:
+      REDIS_URL: "redis://redis:6379/0"
+    links:
       - postgres
       - redis
-    restart: on-failure
 
   nginx:
-    image: 840573575565.dkr.ecr.us-east-1.amazonaws.com/airplanner/nginx:production
+    image: 840573575565.dkr.ecr.us-east-1.amazonaws.com/production-airplanner/nginx:latest
     command: >
       /bin/bash -c "
       /usr/bin/prepare-config &&
-      exec nginx -g daemon off"
+      waitforit -host=be -port=3000 -timeout=60 &&
+      echo 'be found' &&
+      exec nginx -g 'daemon off;'"
     volumes:
       - server_public_folder:/server_public_folder
+      - /var/logs/airplanner-stage-nginx:/var/log/nginx
     environment:
       NGINX_APP_NAME: be
       NGINX_APP_PORT: 3000
-      NGINX_APP_VHOST: TODO # curl http://169.254.169.254/latest/meta-data/public-hostname
+      NGINX_APP_VHOST: ec2-3-84-255-26.compute-1.amazonaws.com
       NGINX_STATIC_PATH: /server_public_folder
     ports:
       - 80:8080
-    depends_on:
+    links:
       - be
