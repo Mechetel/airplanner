@@ -27,6 +27,6 @@ ecs-cli compose \
 aws ecs update-service \
   --service "$MY_PROJECT_NAME-service" \
   --cluster "$MY_PROJECT_NAME-cluster" \
-  --task-definition "staging-airplanner-cluster:21" \
+  --task-definition "staging-airplanner-cluster:22" \
   --desired-count 1 \
   --deployment-configuration "maximumPercent=200,minimumHealthyPercent=50"
