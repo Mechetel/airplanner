@@ -27,7 +27,7 @@ if (process.env.RAILS_ENV == 'development') {
   var rails_env = "development";
 }
 else if (process.env.RAILS_ENV == 'production'){
-  var rails_url = "http://ec2-34-230-26-168.compute-1.amazonaws.com";
+  var rails_url = window.location.origin;
   var rails_env = "production";
 }
 
