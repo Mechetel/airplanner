@@ -1,12 +1,12 @@
-import { combineReducers } from "redux-immutable"
-import { reducer as toastrReducer} from "react-redux-toastr"
+import { combineReducers } from "redux-immutable";
+import { reducer as toastrReducer } from "react-redux-toastr";
 
-import projects from "./projects"
-import tasks    from "./tasks"
-import comments from "./comments"
-import attachments from "./attachments"
-import attachmentsQueue from "./attachmentsQueue"
-import ui       from "./ui"
+import projects from "./projects";
+import tasks from "./tasks";
+import comments from "./comments";
+import attachments from "./attachments";
+import attachmentsQueue from "./attachmentsQueue";
+import ui from "./ui";
 
 export default combineReducers({
   projects,
@@ -16,4 +16,4 @@ export default combineReducers({
   attachmentsQueue,
   ui,
   toastr: toastrReducer,
-})
+});
